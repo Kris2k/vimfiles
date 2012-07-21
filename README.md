@@ -36,6 +36,7 @@ List of plugins that I use
 *   "sessionman" to have some session management, 
     not used, just use screen/tmux and not disable pc/server
 *   "supertab" have various completion under tab
+*   "syntactics" new addition syntax checker for python C/C++ and more
 *   "taglist" again cool to have but I don't use it often, 
 *   "vim-surround" great, not used often but if you need word surrond 
     and not strech your fingers by goin wi"<esc>  use vwS" 
