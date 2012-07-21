@@ -25,3 +25,6 @@
 [submodule ".vim/bundle/command-t"]
 	path = .vim/bundle/command-t
 	url = git://git.wincent.com/command-t.git
+[submodule ".vim/bundle/cscope-vim"]
+	path = .vim/bundle/cscope-vim
+	url = git@github.com:Kris2k/cscope.vim.git
