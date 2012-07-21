@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/xptemplate"]
 	path = .vim/bundle/xptemplate
 	url = git://github.com/drmingdrmer/xptemplate.git
+[submodule ".vim/bundle/A.vim"]
+	path = .vim/bundle/A.vim
+	url = git@github.com:Kris2k/A.vim.git
