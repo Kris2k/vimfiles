@@ -22,3 +22,6 @@
 [submodule ".vim/bundle/A.vim"]
 	path = .vim/bundle/A.vim
 	url = git@github.com:Kris2k/A.vim.git
+[submodule ".vim/bundle/command-t"]
+	path = .vim/bundle/command-t
+	url = git://git.wincent.com/command-t.git
