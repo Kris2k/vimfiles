@@ -16,3 +16,6 @@
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/xptemplate"]
+	path = .vim/bundle/xptemplate
+	url = git://github.com/drmingdrmer/xptemplate.git
