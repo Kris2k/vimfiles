@@ -28,3 +28,6 @@
 [submodule ".vim/bundle/cscope-vim"]
 	path = .vim/bundle/cscope-vim
 	url = git@github.com:Kris2k/cscope.vim.git
+[submodule ".vim/bundle/supertab"]
+	path = .vim/bundle/supertab
+	url = https://github.com/ervandew/supertab
