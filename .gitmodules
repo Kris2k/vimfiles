@@ -34,3 +34,6 @@
 [submodule ".vim/bundle/ZoomWin"]
 	path = .vim/bundle/ZoomWin
 	url = git@github.com:Kris2k/Zoomwin-vim.git
+[submodule ".vim/bundle/Align"]
+	path = .vim/bundle/Align
+	url = git@github.com:Kris2k/Align-vim.git
