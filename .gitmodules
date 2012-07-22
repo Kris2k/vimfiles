@@ -52,3 +52,6 @@
 [submodule ".vim/bundle/makegreen"]
 	path = .vim/bundle/makegreen
 	url = git@github.com:Kris2k/vim-makegreen.git
+[submodule ".vim/bundle/pathogen"]
+	path = .vim/bundle/pathogen
+	url = git@github.com:Kris2k/vim-pathogen.git
