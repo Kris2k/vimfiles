@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/rainbow_parentheses.vim"]
 	path = .vim/bundle/rainbow_parentheses.vim
 	url = git@github.com:Kris2k/rainbow_parentheses.vim.git
+[submodule ".vim/bundle/sessionman.vim"]
+	path = .vim/bundle/sessionman.vim
+	url = git@github.com:Kris2k/sessionman.vim.git
