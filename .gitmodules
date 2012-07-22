@@ -52,3 +52,6 @@
 [submodule ".vim/bundle/sessionman.vim"]
 	path = .vim/bundle/sessionman.vim
 	url = git@github.com:Kris2k/sessionman.vim.git
+[submodule ".vim/bundle/taglist"]
+	path = .vim/bundle/taglist
+	url = https://github.com/Kris2k/taglist.vim
