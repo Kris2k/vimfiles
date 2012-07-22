@@ -37,3 +37,9 @@
 [submodule ".vim/bundle/clang_complete"]
 	path = .vim/bundle/clang_complete
 	url = git@github.com:Kris2k/clang_complete.git
+[submodule ".vim/bundle/xptemplate"]
+	path = .vim/bundle/xptemplate
+	url = https://github.com/Kris2k/xptemplate
+[submodule ".vim/bundle/command-t"]
+	path = .vim/bundle/command-t
+	url = https://github.com/Kris2k/Command-T
