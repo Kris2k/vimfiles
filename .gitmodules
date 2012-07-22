@@ -1,30 +1,6 @@
-[submodule ".vim/bundle/pathogen"]
-	path = .vim/bundle/pathogen
-	url = git://github.com/tpope/vim-pathogen.git
-[submodule ".vim/bundle/ack.vim"]
-	path = .vim/bundle/ack.vim
-	url = git://github.com/mileszs/ack.vim.git
-[submodule ".vim/bundle/clang_complete"]
-	path = .vim/bundle/clang_complete
-	url = https://github.com/Rip-Rip/clang_complete.git
-[submodule ".vim/bundle/makegreen"]
-	path = .vim/bundle/makegreen
-	url = https://github.com/reinh/vim-makegreen.git
-[submodule ".vim/bundle/syntastic"]
-	path = .vim/bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
-[submodule ".vim/bundle/vim-surround"]
-	path = .vim/bundle/vim-surround
-	url = https://github.com/tpope/vim-surround.git
-[submodule ".vim/bundle/xptemplate"]
-	path = .vim/bundle/xptemplate
-	url = git://github.com/drmingdrmer/xptemplate.git
 [submodule ".vim/bundle/A.vim"]
 	path = .vim/bundle/A.vim
 	url = git@github.com:Kris2k/A.vim.git
-[submodule ".vim/bundle/command-t"]
-	path = .vim/bundle/command-t
-	url = git://git.wincent.com/command-t.git
 [submodule ".vim/bundle/cscope-vim"]
 	path = .vim/bundle/cscope-vim
 	url = git@github.com:Kris2k/cscope.vim.git
