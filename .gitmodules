@@ -37,3 +37,6 @@
 [submodule ".vim/bundle/Align"]
 	path = .vim/bundle/Align
 	url = git@github.com:Kris2k/Align-vim.git
+[submodule ".vim/bundle/matchit"]
+	path = .vim/bundle/matchit
+	url = git@github.com:Kris2k/matchit.git
