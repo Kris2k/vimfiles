@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/nosenotes.vim"]
 	path = .vim/bundle/nosenotes.vim
 	url = git@github.com:Kris2k/nosenotes-vim.git
+[submodule ".vim/bundle/rainbow_parentheses.vim"]
+	path = .vim/bundle/rainbow_parentheses.vim
+	url = git@github.com:Kris2k/rainbow_parentheses.vim.git
