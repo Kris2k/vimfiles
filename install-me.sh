@@ -33,7 +33,7 @@ if [ ! -f $cwd/.vimrc ] ; then
     exit 5
 fi
 
-if [ -f $HOME/.gvimrc ] ; then
+if [ ! -f $HOME/.gvimrc ] ; then
     echo "File $HOME/.gvimrc exist aborting"
     exit 6
 fi
