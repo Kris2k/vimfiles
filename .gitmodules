@@ -16,9 +16,6 @@
 [submodule ".vim/bundle/matchit"]
 	path = .vim/bundle/matchit
 	url = git@github.com:Kris2k/matchit.git
-[submodule ".vim/bundle/minibufexpl"]
-	path = .vim/bundle/minibufexpl
-	url = git@github.com:Kris2k/minibufexpl.vim.git
 [submodule ".vim/bundle/nosenotes.vim"]
 	path = .vim/bundle/nosenotes.vim
 	url = git@github.com:Kris2k/nosenotes-vim.git
