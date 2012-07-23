@@ -16,10 +16,6 @@ if [ -f $HOME/.vimrc ] ; then
     exit 2
 fi
 
-if [ -f $HOME/.gvimrc ] ; then
-    echo "File $HOME/.gvimrc exist aborting"
-    exit 3
-fi
 
 cwd=`pwd`
 
@@ -33,13 +29,8 @@ if [ ! -f $cwd/.vimrc ] ; then
     exit 5
 fi
 
-if [ ! -f $HOME/.gvimrc ] ; then
-    echo "File $HOME/.gvimrc exist aborting"
-    exit 6
-fi
 
 #### Deploy ####
 
 ln -s $HOME/.vimrc $cwd/.vimrc
-ln -s $HOME/.gvimrc $cwd/.gvimrc
 ln -s $HOME/.vim $cwd/.vim

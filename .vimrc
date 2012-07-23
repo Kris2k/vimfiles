@@ -224,6 +224,7 @@ noremap  <F2> :set ignorecase! noignorecase?<CR>
 noremap  <F3> :set hlsearch! hlsearch?<CR>
 noremap  <F4> :call NumberInv()<CR>
 noremap  <F5> :setlocal spell! spell?<CR>
+" this is for quick_buffer
 let g:qb_hotkey = "<F6>"
 " copy by F7
 vnoremap <F7> "+ygv"zy`>
@@ -331,10 +332,12 @@ let g:clang_complete_macros   = 1
 
 
 """""""""""""""""""""""""
-" => pyflakes and python
+" => pyflakes and python or syntatctic
 """""""""""""""""""""""""
-let g:pyflakes_use_quickfix = 1
-autocmd FileType python set omnifunc=pythoncomplete#Complete
+"let g:pyflakes_use_quickfix = 1
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+
+let g:syntastic_enable_signs=0
 
 """""""""""""""""""""""""
 " => cscope database auto add see :help cscopequickfix
@@ -395,6 +398,18 @@ command! BlackInvert call InvertBblackBackground()
 
 set term=xterm-256color
 set t_Co=256
+"""""""""""""""""""""""""
+" =>  gvim options
+"""""""""""""""""""""""""
+if has("gui_running")
+    " no buffer menu for me 
+    let no_buffers_menu = 1
+    " disable  menu, Toolbar, Left scorllbar
+    set guioptions -=m
+    set guioptions -=T
+    set guioptions -=L
+    au GUIEnter * set fullscreen
+endif
 
 """""""""""""""""""""""""
 " =>  abreviation to the spelling resuce

@@ -2,6 +2,7 @@
 Plugins to try or throw away:
 * https://github.com/benmills/vimux/
 * https://github.com/rygwdn/vim-async
+* https://github.com/MarcWeber/vim-addon-async
 
 Think about :
 * xptemplate it is big plugin good one but rather bulky
