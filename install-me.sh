@@ -32,5 +32,8 @@ fi
 
 #### Deploy ####
 
-ln -s $HOME/.vimrc $cwd/.vimrc
-ln -s $HOME/.vim $cwd/.vim
+ln -s $cwd/.vimrc $HOME/.vimrc
+ln -s $cwd/.vim $HOME/.vim 
+if [ ! -d $HOME/.vim/tmp/undo ] ; then
+    mkdir -p $HOME/.vim/tmp/undo
+fi
