@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/minibufexpl"]
 	path = .vim/bundle/minibufexpl
 	url = git@github.com:Kris2k/minibuferexpl.git
+[submodule ".vim/bundle/commentary-vim"]
+	path = .vim/bundle/commentary-vim
+	url = git://github.com/tpope/vim-commentary.git
