@@ -332,7 +332,7 @@ let g:clang_complete_macros   = 1
 
 
 """""""""""""""""""""""""
-" => pyflakes and python or syntatctic
+" =>  syntatctic
 """""""""""""""""""""""""
 "let g:pyflakes_use_quickfix = 1
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
