@@ -273,20 +273,21 @@ endif
 """"""""""""""""""""""""""""""
 " => SuperTab plugin
 """""""""""""""""""""""""""""""
-let g:SuperTabDefaultCompletionType        = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
-let g:SuperTabCompletionContexts           = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence    = [ '&completefunc', '&omnifunc']
-let g:SuperTabContextDiscoverDiscovery     = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+" the plugin is cool but doesn't way I would like
+" 1. On tab na <c-p> 
+"        no word continuation, empty tab inserted
+"           word continuation, compleation started
+" 2. Mulit type compleation mixing
 
 """"""""""""""""""""""""""""""
 " => xptemplate plugin
 """""""""""""""""""""""""""""""
+" This is cool but somewhat like too bulky
 " xpt supertab avoid key conflict
-let g:SuperTabMappingForward              = '<Plug>supertabKey'
+"let g:SuperTabMappingForward              = '<Plug>supertabKey'
 " if nothing matched in xpt, try supertab
-let g:xptemplate_fallback                 = '<Plug>supertabKey'
-let g:xptemplate_key                      = '<Tab>'
+"let g:xptemplate_fallback                 = '<Plug>supertabKey'
+let g:xptemplate_key                      = '<c-\>'
 let g:xptemplate_vars                     = "Rloop              = \n&SPcmd = "
 let g:xptemplate_brace_complete           = ''
 "let g:xptemplate_brace_complete = '([{'
