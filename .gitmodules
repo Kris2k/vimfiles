@@ -55,6 +55,3 @@
 [submodule "vim-fugitive"]
 	path = .vim/bundle/fugitive.vim
 	url = git@github.com:Kris2k/vim-fugitive.git
-[submodule "vim-commentary"]
-	path = .vim/bundle/commentary.vim
-	url = git@github.com:Kris2k/vim-commentary.git
