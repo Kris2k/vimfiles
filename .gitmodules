@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/commentary-vim"]
 	path = .vim/bundle/commentary-vim
 	url = git://github.com/tpope/vim-commentary.git
+[submodule ".vim/bundle/file-line-vim"]
+	path = .vim/bundle/file-line-vim
+	url = git@github.com:Kris2k/file-line-vim.git
