@@ -1,3 +1,5 @@
+set nocompatible
+" setlocal fo+=aw for vim mutt
 """"""""""""""""""""""""""""""
 " => Pathogen plugin
 """""""""""""""""""""""""""""""
@@ -9,46 +11,55 @@ let &runtimepath .=',~/.vim/personal'
 """"""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""
-if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
-   set fileencodings=ucs-bom,utf-8,latin1
-   " polis settings for gui
-   se enc=iso-8859-2
-   se tenc=utf8
+if has("gui_running")
+    " no buffer menu for me
+    let no_buffers_menu = 1
+    " disable  menu, Toolbar, Left scorllbar
+    set guioptions -=m
+    set guioptions -=T
+    set guioptions -=L
+    set fileencodings=ucs-bom,utf-8,latin1
+    " polis settings for gui
+    set encoding=utf8
+    set mouse=""
 endif
 
+"if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+"    set termencoding=utf8
+"endif
+
+set title
 syntax enable
 filetype plugin indent on
 
-set incsearch " very usefful for fast find 
-set hlsearch 
+"Enable or not enable ?
+set modeline
+set incsearch
+set hlsearch
 set history=100
 
-set relativenumber 
+set relativenumber
 set softtabstop=4
 set shiftwidth=4
 set shiftround
 set tabstop=4
 set expandtab
-
-
-"set modeline 
-" disable autocomand for paste with comments
-if has("autocmd") 
-    autocmd FileType * setlocal formatoptions-=ro
-    autocmd BufNewFile,BufRead *.py compiler nose 
-endif
-
-        
+let g:tex_flavor='latex'
 """""""""""""""""""""""""
 " => Files backups are off
 """""""""""""""""""""""""
-set nobackup    "do not create backup file
-set nowb        "no create backup when overwriting file
-set noswapfile
+set nobackup         "do not create backup file
+set nowritebackup    "no create backup when overwriting file
+set swapfile    " enabled to prevent double editing
+set dir=$HOME/.vim/tmp/swap
+
+if has("undofile")
+    set undodir=~/.vim/tmp/undo
+    set undofile
+endif
 
 set autoread    "auto read when a file is changed from outside
 set hidden      "warn on exit with unsaved changes
-
 
 " Set backspace config
 set backspace=indent,eol,start
@@ -59,24 +70,95 @@ set ignorecase "Ignore case when searching
 set smartcase
 
 set laststatus=2         " commandline display and tab in cmdline
-set wildchar=<Tab> wildmenu wildmode=full
+set wildchar=<Tab> wildmenu wildmode=list:longest,full
 
 set clipboard+=unnamed "  yanks go to system clipboard too and back on Focus
 autocmd FocusGained * let @z=@+
 
-
-"set timeoutlen=350 " Set a shorter timeout for jj motion
+" match pairs for <> (default for (:) [:] )
+set matchpairs+=<:>
+" Set a shorter timeout
+set timeoutlen=350
+" Fast exit from insert mode
 inoremap jk <Esc>
 inoremap JK <Esc>
 inoremap Jk <Esc>
 inoremap jK <Esc>
 
-" as well as I don't want to use esc key - i like using arrows to compleation
-" and F9 in insert mode this mapping takes it all
+" Wrapped lines goes down/up to next row, rather than next line in file.
+"nnoremap j gj
+"nnoremap k gk
+
+"For learning purposes it is ok,
+"But in terminal it will disable arrows Fn keys and other usefull stuff
+"Left as a warning
 "inoremap <Esc> <nop> "
 
+""""""""""""""""""""""""""""""""""
+" => Terminal/gui settings (gvim)
+""""""""""""""""""""""""""""""""""
+if !has('win32') && !has('win64')
+    set term=$TERM       " Make arrow and other keys work
+endif
+
+if ( &term == "linux" && ! has('gui_running') )
+    " console vim backup that looks on 16 colors
+    colorscheme peachpuff
+else
+    " if nice terminal
+    colorscheme kchrisk
+endif
+" https://github.com/bitc/vim-bad-whitespace/blob/master/plugin/bad-whitespace.vim
+" Highlight trailing whitespace and lines longer than 80 columns.
+highlight LongLine ctermbg=DarkYellow guibg=DarkYellow
+highlight WhitespaceEOL ctermbg=124 guibg=Red
+
+function! ToggleLongLine()
+    if exists('w:long_line_match')
+        silent! call matchdelete(w:long_line_match)
+        unlet w:long_line_match
+        echo "Disable Long Line Highlight"
+        return
+    endif
+    call StartLongLineHighLigh()
+    echo "Enable Long Line Highlight"
+endfunction
+
+function! ToggleLongLine()
+    if exists('w:long_line_match')
+        silent! call matchdelete(w:long_line_match)
+        unlet w:long_line_match
+    endif
+    call StartLongLineHighLigh()
+    echo "Enable Long Line Highlight"
+endfunction
+
+nnoremap <silent> <Leader>d :call ToggleLongLine()<cr>
+
+if v:version >= 702
+    " Lines longer than 80 columns.
+    augroup highlightWhitespaceEOL
+    autocmd!
+        autocmd BufWinEnter * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
+    augroup END
+    augroup highlightLongLines
+    autocmd!
+    augroup END
+else
+    augroup highlight
+    autocmd!
+        autocmd BufRead,BufNewFile * syntax match LongLine /\%>80v.\+/
+        autocmd InsertEnter * syntax match WhitespaceEOL /\s\+\%#\@<!$/
+        autocmd InsertLeave * syntax match WhitespaceEOL /\s\+$/
+    augroup END
+endif
+"
+" autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
+" autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
+" highlight EOLWS ctermbg=124 guibg=Red
+
 """"""""""""""""""""""""""""""
-" => helper functions 
+" => helper functions
 """""""""""""""""""""""""""""""
 function! GetBufferList()
   redir =>buflist
@@ -108,56 +190,69 @@ function! ToggleList(bufname, pfx,num,switchTo)
   endif
 endfunction
 
+"Function that opens a file
+" in split if there is file opened, diffenent that unnamed["No Name"]
+" as only file if there is no other file
+function! NiceOpen(fname)
+    if len(bufname("%")) == 0
+        exec("edit ". strtrans(a:fname))
+    else
+        exec("vsplit ". strtrans(a:fname))
+    endi
+endfunction
+
 """"""""""""""""""""""""""""""
 " => mapleader
 """""""""""""""""""""""""""""""
+"let mapleader=' '
+"let mapleader='-'
 let mapleader=','
-let g:mapleader=','
+let maplocalleader = "\\"
 
+"let g:makeJobNumber='-j4'
 nnoremap <leader>w :w!<cr>
-let g:makeJobNumber='-j4'
+let g:makeJobNumber='4'
 let g:makeTarget=''
 
-" paralel builds 
-nnoremap <leader>m :execute "make ".makeJobNumber." ".makeTarget<cr>
+" builds
+nnoremap <leader><leader> :make <cr>
+"nnoremap <leader>m :make<cr>
+"nnoremap <leader>m :execute "make ".makeJobNumber." ".makeTarget<cr>
 "echo "make -j".makeJobNumber." ".makeTarget
 
 " tests that call make  and commandT becaluse it bothers makegreen
-nnoremap <unique> <silent> <Leader>t :call MakeGreen()<cr>
-nnoremap <Leader>f :CommandT<CR>
+" hasmapto('MakeGreen') is ok but this line makes problems
+"nnoremap <unique> <silent> <Leader>t :call MakeGreen()<cr>
 
-" Quick fix list window
-"nmap <leader>c :botright copen 5<cr>
-nmap <silent> <leader>l :call ToggleList("Location List", 'l','5','no')<CR>
-nmap <silent> <leader>c :call ToggleList("Quickfix List", 'c','5','no')<CR>
-
-" Fast  command line history
-nmap <leader>q q:
-
-"fast buffer access 
-noremap <leader>b :buff <Right>
-
+noremap <silent> <leader>x :s/\ *$//g<cr>
+noremap  <silent> <leader>d :cd %:h<cr>
 nnoremap <silent> <leader>a :Ack <C-R><C-W><CR>
+nmap <silent> <leader>c <Plug>CommentaryLine
+xmap <silent> <leader>c <Plug>Commentary
 nnoremap <silent> <leader>g :grep <C-R><C-W> . <CR>
+""Fast vimrc access
+nnoremap <silent> <leader>eu :call NiceOpen("/etc/portage/package.use")<cr>
+nnoremap <silent> <leader>em :call NiceOpen("/etc/portage/make.conf")<cr>
+nnoremap <silent> <leader>ev :call NiceOpen("$MYVIMRC")<cr>
+nnoremap <silent> <leader>et :call NiceOpen("$HOME/.tmux.conf")<cr>
+nnoremap <silent> <leader>es :call NiceOpen("$HOME/.screenrc")<cr>
+nnoremap <silent> <leader>ez :call NiceOpen("$HOME/.zshrc")<cr>
+nnoremap <silent> <leader>eg :call NiceOpen("$HOME/.gitconfig")<cr>
+nnoremap <silent> <leader>eh :call NiceOpen("$HOME/.ssh/config")<cr>
+nnoremap <silent> <leader>en :call NiceOpen("/home/chris/Projects/utils/git-dotfiles/notes-programing.txt")<cr>
 
-"Fast vimrc access
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>et :vsplit $HOME/.tmux.conf<cr>
-nnoremap <leader>es :vsplit $HOME/.screenrc<cr>
-nnoremap <leader>ez :vsplit $HOME/.zshrc<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <Leader>f :CommandT<CR>
+" Quick fix list window
+nmap <silent> <leader>l :call ToggleList("Location List", 'l','5','no')<CR>
+nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c','5','no')<CR>
+""
+" sourcing Hacks
+nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
 
-" fast  no magic searching  
+" fast  no magic searching
 nnoremap <silent> <leader>v /\v<C-R><C-W><CR>
 
-" fast openig files in current dir
-if has("unix")
-    map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-else
-    map <leader>e :e <C-R>=expand("%:p:h") . "\" <CR>
-endif
-""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 " => diff mode  mappings
 """""""""""""""""""""""""""""""
 if &diff
@@ -168,9 +263,19 @@ if &diff
     map <leader>j ]c
 endif
 
+
 "Fast search & replace
 noremap "" :s:::g<Left><Left><Left>
-noremap ;' :%s:::g<Left><Left><Left>
+" FIXME: it break the  searching
+"noremap ;' :%s:::g<Left><Left><Left>
+
+" Mapping of jumps
+nnoremap ' `
+nnoremap ` '
+
+"  <|>  stays in insert mode
+"vnoremap < <gv
+"vnoremap > >gv
 
 " Common typos and Minibuffer Explorer hack
 command! W :w
@@ -179,19 +284,17 @@ command! WQ wqall
 command! Q qall
 
 
-"""""""""""""""""""""""""""""""
-" => Compleation mappings insert mode
-""""""""""""""""""""""""""""""""
-inoremap <c-p> <c-x><c-p>
-inoremap <c-f> <c-x><c-f>
-inoremap <c-]> <c-x><c-]>
-
-" jumps remeber remeber '' is great 
+" jumps remeber remeber '' is great
 noremap gI `.
 
 " use arrows for something usefull
 "nnoremap <left>  :lnext<cr>zvzz
 "nnoremap <right> :lprev<cr>zvzz
+noremap <M-right> <C-W>>2
+noremap <M-left>  <C-W><2
+nnoremap <M-up>    <Esc>:resize +2 <CR>
+nnoremap <M-down>  <Esc>:resize -2 <CR>
+
 nnoremap <left>  :colder<cr>zvzz
 nnoremap <right> :cnewer<cr>zvzz
 nnoremap <up>    :cprev<cr>zvzz
@@ -200,10 +303,28 @@ nnoremap <down>  :cnext<cr>zvzz
 " Select (charwise) the contents of the current line, excluding indentation.
 " Great for pasting Python lines into REPLs.
 nnoremap vv ^vg_
-
+vnoremap q <c-c>
 """"""""""""""""""""""""""""""
 " => Fn  Shortcuts and others
 """""""""""""""""""""""""""""""
+function! EqualizeWindows()
+    if  bufwinnr(bufnr("-MiniBufExplorer-")) == -1
+        wincmd =
+    else
+        :TMiniBufExplorer
+        wincmd =
+        :TMiniBufExplorer
+    endif
+endfunction
+
+function! CursorLineToggle()
+    if &cursorline
+        set nocursorline
+    else
+        set cursorline
+    endif
+endfunction
+
 function! NumberInv()
     if &relativenumber
         set number
@@ -212,97 +333,82 @@ function! NumberInv()
     if &number
         set nonumber
         return
-    else 
+    else
         set relativenumber
         return
     endif
 endfunction
 
-
-nnoremap <F1>  :ZoomWin<CR>
-noremap  <F2> :set ignorecase! noignorecase?<CR>
-noremap  <F3> :set hlsearch! hlsearch?<CR>
-noremap  <F4> :call NumberInv()<CR>
-noremap  <F5> :setlocal spell! spell?<CR>
-" this is for quick_buffer
-let g:qb_hotkey = "<F6>"
+" hack 4 F1 map b/c vim cant handle multiple nmap F1 w/h complain
+if !exists('f1_mapped')
+nmap <unique> <F1>  <Plug>ZoomWin
+let f1_mapped=1
+endif
+noremap <silent> <F2> :set ignorecase! noignorecase?<CR>
+noremap <silent> <F3> :set hlsearch! hlsearch?<CR>
+noremap  <silent> <F4> :call NumberInv()<CR>
+noremap  <silent> <F5> :setlocal spell! spell?<CR>
+noremap  <silent> <F6> :call CursorLineToggle()<cr>
 " copy by F7
-vnoremap <F7> "+ygv"zy`>
+" vnoremap <silent> <F7> "+ygv"zy`>
+vnoremap <silent> <F7> "+ygv"zy`>
 ""paste (Shift-F7 to paste after normal cursor, Ctrl-F7 to paste over visual selection)
-nnoremap <F7> "zgP
-nnoremap <S-F7> "zgp
-inoremap <F7> <C-r><C-o>z
-vnoremap <C-F7> "zp`]
-cnoremap <F7> <C-r><C-o>z
-noremap  <F8> :TMiniBufExplorer <CR>
+nnoremap <silent> <F7> "+gP
+nnoremap <silent> <S-F7> "+gp
+inoremap <silent> <F7> <C-r><C-o>+
+vnoremap <silent> <C-F7> "+zp`]
+noremap  <silent> <F8> :TMiniBufExplorer <CR>
 set pastetoggle=<F9>
 " buffer switching
+noremap   <F10> call EqualizeWindows()<CR>
 nnoremap <silent> <C-h> :bprevious<CR>
 nnoremap <silent> <C-l> :bnext<CR>
 
 
+" replace paste or swap
+vnoremap rp "0p
 """"""""""""""""""""""""""""""
 " => grep in vim
 """""""""""""""""""""""""""""""
 " -I ignore binary files -Hn is for printing file name and line number
-set grepprg=grep\ -Hn\ -I\ --exclude-dir='.svn'\ --exclude-dir='.git'\ --exclude='tags*'\ --exclude='cscope.*'\ -r 
+set grepprg=grep\ -Hn\ -I\ --exclude-dir='.svn'\ --exclude-dir='.git'\ --exclude='tags*'\ --exclude='cscope.*'\ -r
 
+""""""""""""""""""""""""""""""""""""
+" => Ack  settings to disable html
+""""""""""""""""""""""""""""""""""""
+let g:ackprg="ack -H --nocolor --nogroup --column --nohtml"
 
 """"""""""""""""""""""""""""""
 " => Custom Commands
 """""""""""""""""""""""""""""""
-
 " Strip end of lines  can be done autocomand
-command!  Strip  :%s/\s\+$//e
+function! <SID>StripTrailingWhitespace()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+command! Strip :call <SID>StripTrailingWhitespace()<cr>
 
 " generate Ctags cscope database for C,C++ files
-command! CtagCscopeRegen exe '! find . -regex  ".*\.\(c\|cc\|cpp\|h\|hpp\)$"  -print > cscope.files && cscope -bq && ctags --c++-kinds=-p --fields=+iaS --extra=q --sort=foldcase -L cscope.files '
+command! CtagCscopeRegen exe '! find . -regex  ".*\.\(c\|cc\|cpp\|h\|hpp\)$"  -print > cscope.files && cscope -bq && ctags --c++-kinds=+p --fields=+iaS --extra=+q --sort=foldcase -L cscope.files '
 
-map <C-F12> :CtagCscopeRegen<CR>
+map <silent> <C-F12> :CtagCscopeRegen<CR>
 
-
-""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""
 " => Minibuffer plugin
 """""""""""""""""""""""""""""""
 let g:miniBufExplorerMoreThanOne = 2
 let g:miniBufExplTabWrap         = 1
 " hack for sourcing again the vimrc and setting coulorsheme
 if exists("g:did_minibufexplorer_syntax_inits")
-    unlet g:did_minibufexplorer_syntax_inits 
-endif
-""""""""""""""""""""""""""""""
-" => SuperTab plugin
-"""""""""""""""""""""""""""""""
-" the plugin is cool but doesn't way I would like
-" 1. On tab na <c-p> 
-"        no word continuation, empty tab inserted
-"           word continuation, compleation started
-" 2. Mulit type compleation mixing
-
-""""""""""""""""""""""""""""""
-" => xptemplate plugin
-"""""""""""""""""""""""""""""""
-" This is cool but somewhat like too bulky
-" xpt supertab avoid key conflict
-"let g:SuperTabMappingForward              = '<Plug>supertabKey'
-" if nothing matched in xpt, try supertab
-"let g:xptemplate_fallback                 = '<Plug>supertabKey'
-let g:xptemplate_key                      = '<c-\>'
-let g:xptemplate_vars                     = "Rloop              = \n&SPcmd = "
-let g:xptemplate_brace_complete           = ''
-"let g:xptemplate_brace_complete = '([{'
-let g:xptemplate_bundle                   = 'cpp_autoimplem'
-" xpt triggers only when you typed whole name of a snippet. Optional
-"let g:xptemplate_minimal_prefix = 'full'
-let g:xptemplate_vars = "author=Krzysztof (Chris) Kanas&email=krzysztof.kanas@__at__@gmail.com&kelvatek_author=Krzysztof (Chris) Kanas&kelvatek_email=k.kanas@__at__@kelvatek.com&..."
-
-""""""""""""""""""""""""""""""
-" => rainbow_parenthsis plugin
-"""""""""""""""""""""""""""""""
-if exists("g:btm_rainbow_color") && g:btm_rainbow_color
-    call rainbow_parenthsis#LoadSquare ( )
-    call rainbow_parenthsis#LoadRound  ( )
-    call rainbow_parenthsis#Activate   ( )
+    unlet g:did_minibufexplorer_syntax_inits
 endif
 
 """""""""""""""""""""""""
@@ -314,6 +420,93 @@ let Tlist_Use_Right_Window = 1
 " => command-t plugin
 """""""""""""""""""""""""
 set wildignore+=*.html,*.o,*.obj,.git,.svn "for command-t ignore objects
+
+""""""""""""""""""""""""""""""
+" => rainbow_parenthsis plugin
+"""""""""""""""""""""""""""""""
+if exists("g:btm_rainbow_color") && g:btm_rainbow_color
+    call rainbow_parenthsis#LoadSquare ( )
+    call rainbow_parenthsis#LoadRound  ( )
+    call rainbow_parenthsis#Activate   ( )
+endif
+
+""""""""""""""""""""""""""""""
+" => Tab completion hack, Supertab Replacement
+"""""""""""""""""""""""""""""""
+"set complete
+function! Smart_TabComplete()
+    let l:line = getline('.')                         " current line
+
+    let l:substr = strpart(line, -1, col('.'))      " from the start of the current
+                                                    " line to one character right
+                                                    " of the cursor
+    let l:charBefroeCurrsor = substr[strlen(substr)-1]
+    if ( l:charBefroeCurrsor == ' ' || l:charBefroeCurrsor == '\t' || col('.') == 1 )
+        return "\<tab>"
+    endif
+
+    let l:substr =  matchstr(substr,'\ [^\ ]*$')
+    let l:has_slash = match(substr, '\/') != -1       " position of slash, if any
+    if (!l:has_slash)
+        return "\<C-X>\<C-N>"                       " existing text matching
+        "return "\<C-X>\<C-P>"                       " existing text matching
+    elseif ( l:has_slash )
+        return "\<C-X>\<C-F>"                       " file matching
+    elseif ( strlen(&omnifunc) )
+        return "\<C-X>\<C-O>"                       " plug-in matching
+    else
+        return "\<C-X>\<C-N>"                       " existing text matching
+    endif
+
+endfunction
+
+"function! TT()
+"    " let l:line = getline('.')
+"    " let l:curIndex = col('.')
+"    let l:line = 'test line wiht space than dot.nodot'
+"    let l:curIndex = 30
+"    let l:lastDot = strridx(l:line, '.', l:curIndex)
+"    let l:lastSpace = strridx(l:line, ' ', l:curIndex)
+"    echo "currsor index " . l:curIndex
+"    echo "last dot is   " . l:lastDot
+"    echo "last dot is   " . l:lastSpace
+"    " let lineStr = strpart(line, 0, col('.'))
+"endfunction
+inoremap <silent> <expr> <c-space> pumvisible() ? "\<lt>C-x><C-o>" :  '\<lt>c-p><c-r>=pumvisible() ?  : <c-x><c-p>'
+inoremap <silent> <expr> <tab> pumvisible() ? "\<lt>C-N>" :  "<C-R>=Smart_TabComplete()<cr>"
+inoremap <silent> <expr> <s-tab> pumvisible() ? "\<lt>C-P>" : "\<s-tab><CR>"
+
+"""""""""""""""""""""""""""""""
+" => Completion mappings insert mode
+""""""""""""""""""""""""""""""""
+" or just use <c-n> which is easier
+"FIXME: inoremap <c-i> makes <tab> completion difficult
+"inoremap <c-i> <c-x><c-i>
+"inoremap <c-p> <c-x><c-p>
+"inoremap <c-f> <c-x><c-f>
+"inoremap <c-]> <c-x><c-]>
+
+""""""""""""""""""""""""""""""
+" =>  OmniCpp Completion
+"""""""""""""""""""""""""""""""
+"let OmniCpp_NamespaceSearch = 2
+"let OmniCpp_DisplayMode = 1
+
+""""""""""""""""""""""""""""""
+" => xptemplate plugin
+"""""""""""""""""""""""""""""""
+" This is cool but somewhat like too bulky
+let g:SuperTabMappingForward              = '<tab>'
+" if nothing matched in xpt, try supertab
+"let g:xptemplate_fallback                 = '<Plug>supertabKey'
+let g:xptemplate_key                      = '<c-\>'
+let g:xptemplate_vars                     = "Rloop              = \n&SPcmd = "
+let g:xptemplate_brace_complete           = ''
+"let g:xptemplate_brace_complete = '([{'
+let g:xptemplate_bundle                   = 'cpp_autoimplem'
+" xpt triggers only when you typed whole name of a snippet. Optional
+"let g:xptemplate_minimal_prefix = 'full'
+let g:xptemplate_vars = "author=Krzysztof (Chris) Kanas&email=krzysztof.kanas@__at__@gmail.com&kelvatek_author=Krzysztof (Chris) Kanas&kelvatek_email=k.kanas@__at__@kelvatek.com&..."
 
 """""""""""""""""""""""""
 " => clang_complete plugin
@@ -345,7 +538,7 @@ let g:syntastic_enable_signs=0
 """""""""""""""""""""""""
 if has("cscope") && filereadable("/usr/bin/cscope")
     " nice cscope menu see help
-    set cscopequickfix=s-,g-,c-,d-,i-,t-,e- 
+    set cscopequickfix=s-,g-,c-,d-,i-,t-,e-
     set csprg=/usr/bin/cscope
     set csto=0
     set cst
@@ -359,26 +552,119 @@ if has("cscope") && filereadable("/usr/bin/cscope")
     set csverb
 endif
 
-"""""""""""""""""""""""""
-" => Ack  settings to disable html
-"""""""""""""""""""""""""
-let g:ackprg="ack -H --nocolor --nogroup --column --nohtml"
+let g:makeprgOverride = 0
+function! ToggleBuildOverride()
+    if ( g:makeprgOverride == 0 )
+        let g:makeprgOverride = 1
+        echo "Enable  override"
+    else
+        let g:makeprgOverride = 0
+        echo "Disable override"
+    endif
+endfunction
 
-"""""""""""""""""""""""""
+nnoremap <leader>o :call ToggleBuildOverride()<cr>
+
+function! SetMakePrg()
+
+    if ( g:makeprgOverride )
+        return 0
+    endif
+
+    if filereadable('wscript')
+        setlocal makeprg='./waf'
+        return 0
+    endif
+    if filereadable('bam.lua') && filereadable('./bam')
+        setlocal makeprg='./bam'
+        return
+    endif
+    if bufname("%") =~ ".*\.tex"
+        setlocal makeprg=latexmk\ -pdf
+        return 0
+    endif
+    if glob('?akefile') != ''
+        setlocal makeprg=make\ -j4\ $*
+        return 0
+    endif
+    if bufname("%") =~ ".*\.c" || bufname("%") =~ ".*\.cpp"
+        setlocal makeprg=g++\ %
+    endif
+    return 1
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmds Makefiles autocmd, kernel makefiles etc
-"""""""""""""""""""""""""
-autocmd BufEnter  ?akefile*	set iskeyword+=-
-autocmd BufLeave  ?akefile*	set iskeyword-=-
-autocmd BufEnter  *.mk	    set iskeyword+=-
-autocmd BufLeave  *.mk	set iskeyword-=-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("autocmd")
 
-autocmd BufEnter  *.cpp,*.c,*.h,*.hpp	set completeopt-=preview
-autocmd BufLeave  *.cpp,*.c,*.h,*.hpp	set completeopt+=preview
-autocmd BufReadPost quickfix  set number
 
+   "autocmd FileType vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
+    augroup plugin_commentary
+        autocmd!
+        autocmd BufEnter *.conf setlocal commentstring=#\ %s
+        autocmd FileType gentoo-init-d setlocal commentstring=#\ %s
+        autocmd FileType c,cpp setlocal commentstring=/*%s*/
+        autocmd FileType htmldjango setlocal commentstring={#\ %s\ #}
+        autocmd FileType clojurescript setlocal commentstring=;\ %s
+        autocmd FileType puppet setlocal commentstring=#\ %s
+        autocmd FileType fish setlocal commentstring=#\ %s
+        autocmd FileType tmux setlocal commentstring=#\ %s
+        autocmd FileType gitconfig setlocal commentstring=#\ %s
+    augroup END
+
+    augroup Build
+        autocmd!
+        autocmd BufEnter *.c,*.cpp  setlocal makeprg=g++\ %
+        autocmd BufEnter *  call SetMakePrg()
+    augroup END
+
+    augroup Makefile
+        autocmd!
+        autocmd BufEnter  ?akefile*	set iskeyword+=-
+        autocmd BufLeave  ?akefile*	set iskeyword-=-
+        autocmd BufEnter  *.mk	    set iskeyword+=-
+        autocmd BufLeave  *.mk	set iskeyword-=-
+    augroup END
+
+    augroup CodeFormatters
+        autocmd!
+
+        " autocmd  BufReadPost,FileReadPost   *.py    :silent %!PythonTidy.py
+        " autocmd  BufReadPost,FileReadPost   *.p[lm] :silent %!perltidy -q
+        " autocmd  BufReadPost,FileReadPost   *.xml   :silent %!xmlpp -t -c -n
+        " autocmd  BufReadPost,FileReadPost   *.[ch]  :silent %!indent
+    augroup END
+
+    augroup formating "FIXME:  %s/\ \+$//ge changes currsor possition
+        autocmd!
+        autocmd BufEnter *.tex   setlocal textwidth=80
+        " autocmd BufWritePre *.c,*.cpp,*.h,*.hpp,*.py,*.vim,.vimrc  %s/\ \+$//ge
+        autocmd FileType svn,gitcommit setlocal spell
+        " disable autocomand for paste with comments
+        " when pasting comments span across multiple lines
+        autocmd FileType * setlocal formatoptions-=tcro
+    augroup END
+
+    augroup cpp
+        autocmd!
+        autocmd BufEnter  *.cpp,*.c,*.h,*.hpp	set completeopt-=preview
+        autocmd BufLeave  *.cpp,*.c,*.h,*.hpp	set completeopt+=preview
+    augroup END
+
+    augroup quickfix
+        autocmd!
+        autocmd BufReadPost quickfix  set number
+    augroup END
+
+    augroup pythonAu
+        autocmd!
+        autocmd BufNewFile,BufRead *.py compiler nose
+    augroup END
+
+endif
 "set tags+=~/.vim/tags/stl.tags
 
-colorscheme kchrisk
 
 " small function to make background not transparetn
 function! InvertBblackBackground()
@@ -388,37 +674,37 @@ function! InvertBblackBackground()
     "if revrite minibuffer explorer  !exists("g:did_minibufexplorer_syntax_inits")
     " so the colors are retainged
     if g:kchrisk_black_background
-        let g:kchrisk_black_background = 0 
-        colorscheme kchrisk 
+        let g:kchrisk_black_background = 0
+        colorscheme kchrisk
     elseif  ! g:kchrisk_black_background
-        let g:kchrisk_black_background = 1 
-        colorscheme kchrisk 
+        let g:kchrisk_black_background = 1
+        colorscheme kchrisk
     endif
-endfunction 
+endfunction
+
 command! BlackInvert call InvertBblackBackground()
 
-set term=xterm-256color
-set t_Co=256
-"""""""""""""""""""""""""
-" =>  gvim options
-"""""""""""""""""""""""""
-if has("gui_running")
-    " no buffer menu for me 
-    let no_buffers_menu = 1
-    " disable  menu, Toolbar, Left scorllbar
-    set guioptions -=m
-    set guioptions -=T
-    set guioptions -=L
-    au GUIEnter * set fullscreen
-endif
-
-"""""""""""""""""""""""""
-" =>  abreviation to the spelling resuce
-"""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""
+" =>  abbreviation to the spelling rescue
+""""""""""""""""""""""""""""""""""""""""""
+" convenience
+cabbrev b buffer
+cabbrev E Explore
+" spelling
 iabbrev prevous previous
 iabbrev prefxi prefix
 
+iabbrev neccesary necessary
+iabbrev acction action
+iabbrev destyni destiny
+iabbrev specyfiyng specifying
+iabbrev soruce source
+iabbrev veryfy verify
+iabbrev veryfi verify
+iabbrev vecotr vector
+"
 """""""""""""""""""""""""
-" => Some Notes that I keep forgeting 
+" => Some Notes that I keep forgeting
 """""""""""""""""""""""""
 ":AlignCtrl W :<,>Align     Align some text not mater white spaces/words in front and in back
+
