@@ -37,9 +37,6 @@
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = https://github.com/Kris2k/vim-surround
-[submodule ".vim/bundle/syntastic"]
-	path = .vim/bundle/syntastic
-	url = https://github.com/Kris2k/syntastic
 [submodule ".vim/bundle/makegreen"]
 	path = .vim/bundle/makegreen
 	url = git@github.com:Kris2k/vim-makegreen.git
@@ -58,3 +55,6 @@
 [submodule "mark.vim"]
 	path = .vim/bundle/mark.vim
 	url = git@github.com:Kris2k/mark.vim.git
+[submodule "vim-fugitive"]
+	path = .vim/bundle/fugitive.vim
+	url = git@github.com:Kris2k/vim-fugitive.git
