@@ -24,19 +24,19 @@
 	url = git@github.com:Kris2k/sessionman.vim.git
 [submodule ".vim/bundle/taglist"]
 	path = .vim/bundle/taglist
-	url = https://github.com/Kris2k/taglist.vim
+	url = git@github.com:Kris2k/taglist.vim
 [submodule ".vim/bundle/ack.vim"]
 	path = .vim/bundle/ack.vim
 	url = git@github.com:Kris2k/ack.vim.git
 [submodule ".vim/bundle/xptemplate"]
 	path = .vim/bundle/xptemplate
-	url = https://github.com/Kris2k/xptemplate
+	url = git@github.com:Kris2k/xptemplate
 [submodule ".vim/bundle/command-t"]
 	path = .vim/bundle/command-t
-	url = https://github.com/Kris2k/Command-T
+	url = git@github.com:Kris2k/Command-T
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
-	url = https://github.com/Kris2k/vim-surround
+	url = git@github.com:Kris2k/vim-surround
 [submodule ".vim/bundle/makegreen"]
 	path = .vim/bundle/makegreen
 	url = git@github.com:Kris2k/vim-makegreen.git
