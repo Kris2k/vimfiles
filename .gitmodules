@@ -58,3 +58,6 @@
 [submodule ".vim/bundle/file-line-vim"]
 	path = .vim/bundle/file-line-vim
 	url = git@github.com:Kris2k/file-line-vim.git
+[submodule "mark.vim"]
+	path = .vim/bundle/mark.vim
+	url = git@github.com:Kris2k/mark.vim.git
