@@ -1,3 +1,4 @@
+git pull && git submodule init && git submodule update && git submodule status
 
 Plugins to try or throw away:
 * https://github.com/benmills/vimux/
@@ -10,3 +11,4 @@ Think about :
 Rather to throw away:
 * git://github.com/MasterKey/OmniCppComplete.git
 * quick-buffer
+
