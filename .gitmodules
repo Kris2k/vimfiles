@@ -46,9 +46,6 @@
 [submodule ".vim/bundle/minibufexpl"]
 	path = .vim/bundle/minibufexpl
 	url = git@github.com:Kris2k/minibuferexpl.git
-[submodule ".vim/bundle/commentary-vim"]
-	path = .vim/bundle/commentary-vim
-	url = git://github.com/tpope/vim-commentary.git
 [submodule ".vim/bundle/file-line-vim"]
 	path = .vim/bundle/file-line-vim
 	url = git@github.com:Kris2k/file-line-vim.git
@@ -58,3 +55,6 @@
 [submodule "vim-fugitive"]
 	path = .vim/bundle/fugitive.vim
 	url = git@github.com:Kris2k/vim-fugitive.git
+[submodule "vim-commentary"]
+	path = .vim/bundle/commentary.vim
+	url = git@github.com:Kris2k/vim-commentary.git
