@@ -51,10 +51,17 @@ let g:tex_flavor='latex'
 set nobackup         "do not create backup file
 set nowritebackup    "no create backup when overwriting file
 set swapfile    " enabled to prevent double editing
+
+if !isdirectory($HOME . '/.vim/tmp/swap')
+    call mkdir($HOME . '/.vim/tmp/swap', 'p', 0700)
+endif
 set dir=$HOME/.vim/tmp/swap
 
-if has("undofile")
-    set undodir=~/.vim/tmp/undo
+if has("persistent_undo")
+    if !isdirectory($HOME. '/.vim/tmp/undo')
+        call mkdir($HOME. '/.vim/tmp/undo', 'p', 0700)
+    endif
+    set undodir=$HOME/.vim/tmp/undo
     set undofile
 endif
 
@@ -424,12 +431,14 @@ set wildignore+=*.html,*.o,*.obj,.git,.svn "for command-t ignore objects
 """"""""""""""""""""""""""""""
 " => rainbow_parenthsis plugin
 """""""""""""""""""""""""""""""
-if exists("g:btm_rainbow_color") && g:btm_rainbow_color
-    call rainbow_parenthsis#LoadSquare ( )
-    call rainbow_parenthsis#LoadRound  ( )
-    call rainbow_parenthsis#Activate   ( )
-endif
-
+augroup RainbowsParentheses
+    autocmd!
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+    au Syntax * RainbowParenthesesLoadChevrons
+augroup END
 """"""""""""""""""""""""""""""
 " => Tab completion hack, Supertab Replacement
 """""""""""""""""""""""""""""""
