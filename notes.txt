@@ -1,5 +1,8 @@
 git pull && git submodule init && git submodule update && git submodule status
 
+TODO:
+    move tab compleation to separate plugin
+
 Plugins to try or throw away:
 * https://github.com/benmills/vimux/
 * https://github.com/rygwdn/vim-async
