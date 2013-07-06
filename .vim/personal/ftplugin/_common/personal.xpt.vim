@@ -13,3 +13,9 @@ XPTemplate priority=personal
 XPT yoursnippet " tips here
 bla bla
 
+
+XPTvar $BRif           ''
+XPTvar $BRloop         ' '
+XPTvar $BRstc          ' '
+XPTvar $BRfun          \n
+XPTvar $SParg          ''
