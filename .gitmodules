@@ -55,3 +55,6 @@
 [submodule "vim-commentary"]
 	path = .vim/bundle/commentary.vim
 	url = git@github.com:Kris2k/vim-commentary.git
+[submodule "camel-case-motion"]
+	path = .vim/bundle/camelCaseMotion.vim
+	url = git@github.com:Kris2k/CamelCaseMotion
