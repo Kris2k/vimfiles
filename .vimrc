@@ -440,61 +440,6 @@ augroup RainbowsParentheses
     au Syntax * RainbowParenthesesLoadBraces
     au Syntax * RainbowParenthesesLoadChevrons
 augroup END
-""""""""""""""""""""""""""""""
-" => Tab completion hack, Supertab Replacement
-"""""""""""""""""""""""""""""""
-"set complete
-function! Smart_TabComplete()
-    let l:line = getline('.')                         " current line
-
-    let l:substr = strpart(line, -1, col('.'))      " from the start of the current
-                                                    " line to one character right
-                                                    " of the cursor
-    let l:charBefroeCurrsor = substr[strlen(substr)-1]
-    if ( l:charBefroeCurrsor == ' ' || l:charBefroeCurrsor == '\t' || col('.') == 1 )
-        return "\<tab>"
-    endif
-
-    let l:substr =  matchstr(substr,'\ [^\ ]*$')
-    let l:has_slash = match(substr, '\/') != -1       " position of slash, if any
-    if (!l:has_slash)
-        return "\<C-X>\<C-N>"                       " existing text matching
-        "return "\<C-X>\<C-P>"                       " existing text matching
-    elseif ( l:has_slash )
-        return "\<C-X>\<C-F>"                       " file matching
-    elseif ( strlen(&omnifunc) )
-        return "\<C-X>\<C-O>"                       " plug-in matching
-    else
-        return "\<C-X>\<C-N>"                       " existing text matching
-    endif
-
-endfunction
-
-"function! TT()
-"    " let l:line = getline('.')
-"    " let l:curIndex = col('.')
-"    let l:line = 'test line wiht space than dot.nodot'
-"    let l:curIndex = 30
-"    let l:lastDot = strridx(l:line, '.', l:curIndex)
-"    let l:lastSpace = strridx(l:line, ' ', l:curIndex)
-"    echo "currsor index " . l:curIndex
-"    echo "last dot is   " . l:lastDot
-"    echo "last dot is   " . l:lastSpace
-"    " let lineStr = strpart(line, 0, col('.'))
-"endfunction
-inoremap <silent> <expr> <c-space> pumvisible() ? "\<lt>C-x><C-o>" :  '\<lt>c-p><c-r>=pumvisible() ?  : <c-x><c-p>'
-inoremap <silent> <expr> <tab> pumvisible() ? "\<lt>C-N>" :  "<C-R>=Smart_TabComplete()<cr>"
-inoremap <silent> <expr> <s-tab> pumvisible() ? "\<lt>C-P>" : "\<s-tab><CR>"
-
-"""""""""""""""""""""""""""""""
-" => Completion mappings insert mode
-""""""""""""""""""""""""""""""""
-" or just use <c-n> which is easier
-"FIXME: inoremap <c-i> makes <tab> completion difficult
-"inoremap <c-i> <c-x><c-i>
-"inoremap <c-p> <c-x><c-p>
-"inoremap <c-f> <c-x><c-f>
-"inoremap <c-]> <c-x><c-]>
 
 """"""""""""""""""""""""""""""
 " =>  OmniCpp Completion

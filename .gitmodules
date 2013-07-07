@@ -58,3 +58,6 @@
 [submodule "camel-case-motion"]
 	path = .vim/bundle/camelCaseMotion.vim
 	url = git@github.com:Kris2k/CamelCaseMotion
+[submodule "simple-tab-compleation"]
+	path = .vim/bundle/SimpleTabCompleation.vim
+	url = git@github.com:Kris2k/SimpleTabCompleation.vim.git

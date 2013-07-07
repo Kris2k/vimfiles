@@ -3,6 +3,35 @@ git pull && git submodule init && git submodule update && git submodule status
 TODO:
     move tab compleation to separate plugin
 
+vim multicursor pligun  https://github.com/terryma/vim-multiple-cursors
+vim project or sth like that https://github.com/dbakker/vim-projectroot
+vim git gutter https://github.com/jisaacks/GitGutter
+vim gist http://www.vim.org/scripts/script.php?script_id=2423
+
+VIM SLIME REPL
+http://www.vim.org/scripts/script.php?script_id=2551
+
+VIM TERMINAL MULTIBYTE
+http://like-a-boss.net/2011/12/04/my-vim-setup.html
+
+if has("multi_byte")
+   if &termencoding == ""
+        let &termencoding = &encoding
+    endif
+    set encoding=utf-8jkk
+    setglobal fileencoding=utf-8
+    set fileencodings=uds-bom,utf-8,latin1
+endif
+
+
+python
+    autocmd FileType python noremap <F9> <Esc>:!python %<CR>
+
+gnuplot
+    autocmd BufNewFile,BufRead *.gp noremap <F12> <Esc>:!gnuplot -persist % <CR>
+
+
+
 Plugins to try or throw away:
 * https://github.com/benmills/vimux/
 * https://github.com/rygwdn/vim-async
