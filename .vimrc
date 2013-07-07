@@ -217,12 +217,10 @@ let mapleader=','
 let maplocalleader = "\\"
 
 "let g:makeJobNumber='-j4'
-nnoremap <leader>w :w!<cr>
 let g:makeJobNumber='4'
 let g:makeTarget=''
 
 " builds
-nnoremap <leader><leader> :make <cr>
 "nnoremap <leader>m :make<cr>
 "nnoremap <leader>m :execute "make ".makeJobNumber." ".makeTarget<cr>
 "echo "make -j".makeJobNumber." ".makeTarget
@@ -231,7 +229,10 @@ nnoremap <leader><leader> :make <cr>
 " hasmapto('MakeGreen') is ok but this line makes problems
 "nnoremap <unique> <silent> <Leader>t :call MakeGreen()<cr>
 
-noremap <silent> <leader>x :s/\ *$//g<cr>
+" noremap <silent> <leader>x :s/\ *$//g<cr>
+nnoremap <leader><leader> :make <cr>
+nnoremap <leader>s :w!<cr>
+nnoremap <leader>x :qall!<cr>
 noremap  <silent> <leader>d :cd %:h<cr>
 nnoremap <silent> <leader>a :Ack <C-R><C-W><CR>
 nmap <silent> <leader>c <Plug>CommentaryLine
@@ -693,6 +694,15 @@ endfunction
 
 command! BlackInvert call InvertBblackBackground()
 
+""""""""""""""""""""""""""""""""""""""""""
+" =>  Cammel case motion to the recue
+""""""""""""""""""""""""""""""""""""""""""
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
 """"""""""""""""""""""""""""""""""""""""""
 " =>  abbreviation to the spelling rescue
 """"""""""""""""""""""""""""""""""""""""""
