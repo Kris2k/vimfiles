@@ -216,4 +216,22 @@ else
     endif
 endif
 
+" small function to make background not transparetn
+function! <SID>InvertBblackBackground()
+    if ! exists("g:kchrisk_black_background")
+        let g:kchrisk_black_background = 0
+    endif
+    "if revrite minibuffer explorer  !exists("g:did_minibufexplorer_syntax_inits")
+    " so the colors are retainged
+    if g:kchrisk_black_background
+        let g:kchrisk_black_background = 0
+        colorscheme kchrisk
+    elseif  ! g:kchrisk_black_background
+        let g:kchrisk_black_background = 1
+        colorscheme kchrisk
+    endif
+endfunction
+
+command! BlackInvert call InvertBblackBackground()
+
 " vim: set et :
