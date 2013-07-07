@@ -1,7 +1,8 @@
 git pull && git submodule init && git submodule update && git submodule status
 
-TODO:
-    move tab compleation to separate plugin
+FIXME:
+#TODO.vim/bundle/commentary-vim/
+#TODO.vim/bundle/supertab/
 
 vim multicursor pligun  https://github.com/terryma/vim-multiple-cursors
 vim project or sth like that https://github.com/dbakker/vim-projectroot
@@ -18,9 +19,9 @@ if has("multi_byte")
    if &termencoding == ""
         let &termencoding = &encoding
     endif
-    set encoding=utf-8jkk
+    set encoding=utf-8
     setglobal fileencoding=utf-8
-    set fileencodings=uds-bom,utf-8,latin1
+    set fileencodings=utf-8,latin1
 endif
 
 
