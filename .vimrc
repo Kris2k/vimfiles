@@ -112,7 +112,8 @@ if ( &term == "linux" && ! has('gui_running') )
     " console vim backup that looks on 16 colors
     colorscheme peachpuff
 else
-    " if nice terminal
+    " I want all colors
+    set t_Co=256
     colorscheme kchrisk
 endif
 " https://github.com/bitc/vim-bad-whitespace/blob/master/plugin/bad-whitespace.vim
