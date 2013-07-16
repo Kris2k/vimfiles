@@ -380,7 +380,7 @@ vnoremap rp "0p
 " => grep in vim
 """""""""""""""""""""""""""""""
 " -I ignore binary files -Hn is for printing file name and line number
-set grepprg=grep\ -Hn\ -I\ --exclude-dir='.svn'\ --exclude-dir='.git'\ --exclude='tags*'\ --exclude='cscope.*'\ -r
+set grepprg=grep\ -Hn\ -I\ --exclude-dir='.svn'\ --exclude-dir='.git'\ --exclude='tags*'\ --exclude='cscope.*'\ --exclude='*.html'\ -r
 
 """"""""""""""""""""""""""""""""""""
 " => Ack  settings to disable html
