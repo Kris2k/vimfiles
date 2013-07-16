@@ -1,4 +1,5 @@
 git pull && git submodule init && git submodule update && git submodule status
+git   submodule add --name robotframework.vim git@github.com:Kris2k/robotframework-vim.git .vim/bundle/robotframework.vim
 
 vim multicursor pligun  https://github.com/terryma/vim-multiple-cursors
 vim project or sth like that https://github.com/dbakker/vim-projectroot
