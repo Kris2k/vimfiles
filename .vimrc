@@ -576,8 +576,9 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
 
-
-   "autocmd FileType vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    augroup vimscipt
+        autocmd FileType vim setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    augroup END
 
     augroup plugin_commentary
         autocmd!
