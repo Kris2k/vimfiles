@@ -650,6 +650,14 @@ endif
 "set tags+=~/.vim/tags/stl.tags
 
 """"""""""""""""""""""""""""""""""""""""""
+" =>  GitGutter
+""""""""""""""""""""""""""""""""""""""""""
+hi SignColumn ctermbg=NONE
+
+nnoremap <silent> gf :GitGutterPrevHunk<cr>
+nnoremap <silent> gh :GitGutterNextHunk<cr>
+
+""""""""""""""""""""""""""""""""""""""""""
 " =>  Cammel case motion to the recue
 """"""""""""""""""""""""""""""""""""""""""
 map <silent> w <Plug>CamelCaseMotion_w
