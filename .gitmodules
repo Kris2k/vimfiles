@@ -61,3 +61,6 @@
 [submodule "simple-tab-compleation"]
 	path = .vim/bundle/SimpleTabCompleation.vim
 	url = git@github.com:Kris2k/SimpleTabCompleation.vim.git
+[submodule "robotframework.vim"]
+	path = .vim/bundle/robotframework.vim
+	url = git@github.com:Kris2k/robotframework-vim.git
