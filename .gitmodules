@@ -64,3 +64,6 @@
 [submodule "robotframework.vim"]
 	path = .vim/bundle/robotframework.vim
 	url = git@github.com:Kris2k/robotframework-vim.git
+[submodule "gitgutter.vim"]
+	path = .vim/bundle/gitgutter.vim
+	url = git@github.com:Kris2k/vim-gitgutter.git
