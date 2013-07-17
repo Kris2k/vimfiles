@@ -1,6 +1,19 @@
 git pull && git submodule init && git submodule update && git submodule status
 git   submodule add --name robotframework.vim git@github.com:Kris2k/robotframework-vim.git .vim/bundle/robotframework.vim
 
+Change buffer managment
+Req:
+    - i want number to work
+    - plugin to not suck, be big or eth
+maybe switch from minibuffer to sth else like
+buftabs http://www.vim.org/scripts/script.php?script_id=1664
+tabbar http://www.vim.org/scripts/script.php?script_id=1338
+buffergator https://github.com/jeetsukumaran/vim-buffergator
+lusty juggler https://github.com/sjbach/lusty http://www.vim.org/scripts/script.php?script_id=2050
+or stb allready did it
+http://vim.wikia.com/wiki/Easier_buffer_switching
+
+
 vim project or sth like that https://github.com/dbakker/vim-projectroot
 vim gist http://www.vim.org/scripts/script.php?script_id=2423
 
