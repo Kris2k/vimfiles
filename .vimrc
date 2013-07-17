@@ -666,6 +666,15 @@ map <silent> e <Plug>CamelCaseMotion_e
 sunmap w
 sunmap b
 sunmap e
+
+""""""""""""""""""""""""""""""""""""""""""
+" =>  Avoid hit enter, for man and any other cmd
+""""""""""""""""""""""""""""""""""""""""""
+command! -nargs=1 Silent | execute ':silent !'.<q-args>
+      \ | execute ':redraw!'
+
+nnoremap <silent> K :Silent man <C-R><C-W><cr>
+
 """"""""""""""""""""""""""""""""""""""""""
 " =>  abbreviation to the spelling rescue
 """"""""""""""""""""""""""""""""""""""""""
