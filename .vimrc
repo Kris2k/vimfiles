@@ -431,6 +431,11 @@ let Tlist_Use_Right_Window = 1
 set wildignore+=*.html,*.o,*.obj,.git,.svn "for command-t ignore objects
 
 """"""""""""""""""""""""""""""
+" => Robot framework plugin detection
+"""""""""""""""""""""""""""""""
+let g:robot_syntax_for_txt=1
+
+""""""""""""""""""""""""""""""
 " => rainbow_parenthsis plugin
 """""""""""""""""""""""""""""""
 " FIXME: under terminal 12 max colors make some parenthes difficult tosee
