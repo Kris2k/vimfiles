@@ -434,11 +434,12 @@ set wildignore+=*.html,*.o,*.obj,.git,.svn "for command-t ignore objects
 " => rainbow_parenthsis plugin
 """""""""""""""""""""""""""""""
 " FIXME: under terminal 12 max colors make some parenthes difficult tosee
+" FIXME: still blue is diffictult to display on black backroudn
 let g:rbpt_max = 8
 
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
+    \ ['DarkYellow',    'SeaGreen3'],
     \ ['darkgray',    'DarkOrchid3'],
     \ ['darkgreen',   'firebrick3'],
     \ ['darkcyan',    'RoyalBlue3'],
