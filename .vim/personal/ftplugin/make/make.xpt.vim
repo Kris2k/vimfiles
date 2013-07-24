@@ -5,6 +5,38 @@ XPTinclude
       \ _common/common
       \ _comment/singleSign
 
+XPT ansiC " minimalistic anis c make
+TARGET:=test
+all: $(TARGET)
+.PHONY: $(TARGET)
+
+obj:=$(patsubst %.c,%.o,$(wildcard *.c))
+
+clean:
+    -rm $(TARGET) $(obj)
+
+%.o:  %.c
+    $(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET): $(obj)
+    $(CC) $(CFLAGS)  $(LDFLAGS) $\^ -o $@
+
+XPT cppMinimal " minimalistic C++ make
+TARGET:=test
+all: $(TARGET)
+.PHONY: $(TARGET)
+
+obj:=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+
+clean:
+    -rm $(TARGET) $(obj)
+
+%.o:  %.c
+    $(CXX) $(CFLAGS) -c $< -o $@
+
+$(TARGET): $(obj)
+    $(CXX) $(CFLAGS)  $(LDFLAGS) $\^ -o $@
+
 
 XPT beerware " beerware licence 
 ######################################################################################## 
