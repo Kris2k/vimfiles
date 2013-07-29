@@ -597,10 +597,12 @@ if has("autocmd")
 
     augroup plugin_commentary
         autocmd!
+        autocmd FileType c,cpp setlocal commentstring=/*%s*/
         autocmd BufEnter *.conf setlocal commentstring=#\ %s
+        autocmd FileType robot setlocal commentstring=Comment\ \ \ \ %s
+        autocmd FileType cfg setlocal commentstring=#\ %s
         autocmd FileType fstab setlocal commentstring=#\ %s
         autocmd FileType gentoo-init-d setlocal commentstring=#\ %s
-        autocmd FileType c,cpp setlocal commentstring=/*%s*/
         autocmd FileType htmldjango setlocal commentstring={#\ %s\ #}
         autocmd FileType clojurescript setlocal commentstring=;\ %s
         autocmd FileType puppet setlocal commentstring=#\ %s
