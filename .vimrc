@@ -116,6 +116,11 @@ else
     set t_Co=256
     colorscheme kchrisk
 endif
+
+" This also brreak somethin
+if match($TERM, "screen")!=-1
+  set term=xterm-256color
+endif
 " https://github.com/bitc/vim-bad-whitespace/blob/master/plugin/bad-whitespace.vim
 " Highlight trailing whitespace and lines longer than 80 columns.
 highlight LongLine ctermbg=DarkYellow guibg=DarkYellow
