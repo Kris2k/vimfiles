@@ -374,7 +374,11 @@ vnoremap <silent> <C-F7> "+zp`]
 noremap  <silent> <F8> :TMiniBufExplorer <CR>
 set pastetoggle=<F9>
 " buffer switching
-noremap   <F10> call EqualizeWindows()<CR>
+" noremap   <F10> call EqualizeWindows()<CR>
+" map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+"       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+"       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 nnoremap <silent> <C-h> :bprevious<CR>
 nnoremap <silent> <C-l> :bnext<CR>
 
