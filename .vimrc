@@ -711,6 +711,12 @@ iabbrev soruce source
 iabbrev veryfy verify
 iabbrev veryfi verify
 iabbrev vecotr vector
+
+iabbrev timedout timed out
+iabbrev timeouted timed out
+iabbrev readed  read
+iabbrev sended send
+iabbrev succesfull  successful
 "
 """""""""""""""""""""""""
 " => Some Notes that I keep forgeting
