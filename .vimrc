@@ -424,10 +424,11 @@ map <silent> <C-F12> :CtagCscopeRegen<CR>
 """""""""""""""""""""""""""""""
 let g:miniBufExplorerMoreThanOne = 2
 let g:miniBufExplTabWrap         = 1
+let g:miniBufExplStatusLineText = ''
 " hack for sourcing again the vimrc and setting coulorsheme
-if exists("g:did_minibufexplorer_syntax_inits")
-    unlet g:did_minibufexplorer_syntax_inits
-endif
+" if exists("g:did_minibufexplorer_syntax_inits")
+"     unlet g:did_minibufexplorer_syntax_inits
+" endif
 
 """""""""""""""""""""""""
 " => Tlist plugin
