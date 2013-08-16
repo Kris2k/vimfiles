@@ -69,4 +69,4 @@
 	url = git@github.com:Kris2k/vim-gitgutter.git
 [submodule "minbuffexpl.vim"]
 	path = .vim/bundle/minibufexpl.vim
-	url = https://github.com/Kris2k/minibufexpl.vim
+	url = git@github.com/Kris2k/minibufexpl.vim
