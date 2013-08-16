@@ -442,7 +442,7 @@ set wildignore+=*.html,*.o,*.obj,.git,.svn "for command-t ignore objects
 """"""""""""""""""""""""""""""
 " => Robot framework plugin detection
 """""""""""""""""""""""""""""""
-let g:robot_syntax_for_txt=1
+" let g:robot_syntax_for_txt=1
 
 """"""""""""""""""""""""""""""
 " => rainbow_parenthsis plugin
