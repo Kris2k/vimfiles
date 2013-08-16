@@ -1,0 +1,337 @@
+#!/bin/bash
+
+#Constants
+
+#the directory to use script with
+REPODIR=$(pwd)
+#uncomment the next line to bind the script to the vim directory
+#REPODIR="$HOME/.vim"
+
+#-d flag indicator 
+DIR_FLAG=false
+
+#-u flag indicator
+UPDATE_FLAG=false
+
+#-r flag is used without specifing the submodule
+REMOVE_FLAG=false
+
+#-r submodule flag indicator
+REMOVE_FLAG_SPECIFIC_SUBMODULE=false
+
+VERSION="0.2"
+
+#chosen submodule for deletion
+SUBMODULE_TO_REMOVE=
+
+#some colors used in the echo
+red='\033[0;31m'
+green='\033[0;32m'
+yellow='\033[0;33m'
+cyan='\033[0;36m'
+NC='\033[0m' # No Color
+
+
+#Functions
+function check_flags()
+{
+    #check the flags user used
+    if [ $# -le 0 ];then
+        show_help
+    fi
+
+    while test $# -gt 0; do
+        case "$1" in
+            -h|--help) 
+                show_help
+                ;;
+            -d|--dir) 
+                shift
+                if test $# -gt 0; then
+                    DIR_FLAG=true
+                    REPODIR=$1
+                fi
+                shift
+                ;;
+            -u|--update|update)
+                UPDATE_FLAG=true
+                shift
+                if test $# -gt 0; then
+                    if [ $1 == '--help' ];then
+                        show_update_help
+                    fi
+                fi
+                ;;
+            -r|--remove|remove)
+                shift
+                REMOVE_FLAG=true
+                if test $# -gt 0; then
+                    REMOVE_FLAG_SPECIFIC_SUBMODULE=true
+                    SUBMODULE_TO_REMOVE=$1
+                    if [ $SUBMODULE_TO_REMOVE == '--help' ];then
+                        show_remove_help
+                    fi
+                fi
+                shift
+                ;;
+            --version)
+                echo -e "$VERSION"
+                exit 0
+                ;;
+            *)
+                echo -e "illegal option"
+                show_help
+                ;;
+        esac
+    done
+}
+
+#gitsubmodule remove --help
+function show_remove_help()
+{
+    echo -e "usage: gitsubmodule -r|--remove|remove [--help|=<submodule>]"
+    echo -e ""
+    echo -e "if no submodule was passed the script will find all the available submodules"
+    echo -e "and will prompt the user to choose one of them to delete"
+    echo -e "if submodule was provided the script will find all the available matches to this submodule"
+    echo -e "and will prompt the user to choose one of the matches to delete if more than 1 match occured"
+    echo -e "or will automatically delete if only 1 match found"
+    echo -e ""
+    echo -e "procedure :"
+    echo -e "  1) remove the submodule part from .gitmodules"
+    echo -e "  2) remove the submodule part from .git/config"
+    echo -e "  3) remove the the submodule cached directory"
+    echo -e "  4) remove the submodule from .git/modules directory"
+    echo -e "  5) commit the changes to the modified files only"
+    echo -e "  6) remove the submodule directory"
+    exit 0
+}
+
+#gitsubmodule update --help
+function show_update_help()
+{
+    echo -e "usage: gitsubmodule -u|--updtae|update [--help]"
+    echo -e ""
+    echo -e "Updates the available submodules found in the .gitmodules file"
+    echo -e "procedure :"
+    echo -e "  1) cd into the submodule directory"
+    echo -e "  2) stash the changes in the submodule"
+    echo -e "  3) check out master branch to fix an issue where you are on (no-branch)"
+    echo -e "  4) git pull latest changes"
+    echo -e "  5) reapply stashed changes"
+    exit 0
+}
+
+#gitsubmodule --help
+function show_help()
+{
+    echo -e "usage: gitsubmodule [options | options[args]]"
+    echo -e ""
+    echo -e "Options:"
+    echo -e "  -h,--help \t\tprint this help text and exit"
+    echo -e "  --version \t\tprint this script version and exit"
+    echo -e "  -d,--dir  \t\tprovide the directory of the repo by default it's the current directoy"
+    echo -e "  -u,--update,update \tissue update of the available submodules in the repo"
+    echo -e "  \t\t\tcan also check update help using 'gitsubmodule update --help'"
+    echo -e "  -r,--remove,remove \tprompt the user to choose one of the available submodules to remove"
+    echo -e "  \t\t\tgitsubmodule remove XXX will search for matching to XXX and will remove if only found 1 match found"
+    echo -e "  \t\t\tand will prompt user to select one of the matches if more than 1 match found"
+    echo -e "  \t\t\tcan also check remove help using 'gitsubmodule remove --help'"
+    echo -e ""
+    echo -e "See 'gitsubmodule [remove|update] --help ' for specific help info"
+    echo -e ""
+    echo -e "Script source 'https://github.com/artmees/gitsubmodule'"
+    echo -e "github page   'https://artmees.github.io/gitsubmodule'"
+    exit 0
+}
+
+function check_directory()
+{
+
+    #first check the flags user used
+    check_flags $@
+
+    #check if the REPODIR is valid
+    if [ -d $REPODIR ];then
+        #found a valid directory
+        check_vim_directory
+    elif [ $DIR_FLAG == true ];then
+        #used -d but the directory is incorrect directory
+        echo -e "$REPODIR : doesn't look like a directory">&2
+        exit 0
+    else
+        #a valid directory but didn't find any .gitmodules in it, but you didn't used -d options
+        echo -e "$REPODIR : directory doesn't have \".gitmodules\" file, Please use -d [directory]">&2
+        exit 0
+    fi
+}
+
+function check_vim_directory()
+{
+    #check if the directory contains .gitmodules file
+    if [ -f "$REPODIR/.gitmodules" ] ;then
+        echo -e "${green}Reading : ${NC}.gitmodules file"
+        #strip the  names and paths of the submodules in the file
+        parse_git_modules_file "$REPODIR/.gitmodules"
+    else
+        #the -d directory provided doesn't contain any .gitmodules
+        echo -e "$REPODIR : directory doesn't have \".gitmodules\" file">&2
+        exit 0
+    fi
+}
+
+function parse_git_modules_file()
+{
+    GIT_MODULES_FILE=$1
+    #read file line by line
+    NUMBER_OF_SUBMODULES=0
+
+    # the grep patterns used to find the submodules and the paths
+    SUBMODULE_PATH_PATTERN='path'
+    while read LINE <&3; do
+
+        SUBMODULE_LINE=$(echo "$LINE" | grep $SUBMODULE_PATH_PATTERN)
+        if [ ${#SUBMODULE_LINE} -gt 0 ]; then
+            #strip the path of the submodule from path = "XXX/XXX
+            paths[$NUMBER_OF_SUBMODULES]=${SUBMODULE_LINE:7}
+
+            #increment the numbers of submodules after getting the name and path
+            NUMBER_OF_SUBMODULES=$((NUMBER_OF_SUBMODULES+1))
+        fi
+    done 3< $GIT_MODULES_FILE
+
+    #check empty gitmodules file
+    if [ ${#paths[@]} == 0 ];then
+        echo -e "${yellow}No submodules were found in the .gitmodules file${NC}"
+        exit 0
+    fi
+
+    #issue update procedure
+    if [ $UPDATE_FLAG == true ];then
+        update_all_submodules paths[@] 
+    fi
+
+    #issue remove procedure
+    if [ $REMOVE_FLAG_SPECIFIC_SUBMODULE == true ];then
+        #a submodule have been provided in the args
+        echo -e "${green}Checking :${NC} $SUBMODULE_TO_REMOVE"
+        check_submodule_valid paths[@]
+    elif [ $REMOVE_FLAG == true ];then
+        #remove is issued but without providing the submodule to remove
+        #get the module you want to delete from the list of available modules
+        prompt_module_num paths[@]
+        SUBMODULE_TO_REMOVE=${paths[`expr $PROMPT_CHOSEN_NUMBER - 1`]}
+        remove_submodule
+    fi
+}
+
+#used to prompt the user when more than 1 submodule is matched
+function prompt_module_num() 
+{ 
+    declare -a paths=("${!1}")
+    while true;do
+        local MODULE_NUM=0
+        PROMPT_CHOSEN_NUMBER=0
+        echo -e "Available submodules :"
+        for i in "${paths[@]}";do
+            MODULE_NUM=`expr $MODULE_NUM + 1`;
+            echo -e " $MODULE_NUM) $i"
+        done
+        read -p "Please choose the submodule you want to remove : " PROMPT_CHOSEN_NUMBER
+        if [[ $PROMPT_CHOSEN_NUMBER -le $MODULE_NUM && $PROMPT_CHOSEN_NUMBER -gt 0 ]];then
+            return $PROMPT_CHOSEN_NUMBER
+        fi
+    done
+}
+
+#update submodule
+#procedure :
+#   1) cd submodule
+#   2) stash the changes in the submodule
+#   3) check out master branch to fix an issue where you are on (no-branch)
+#   4) git pull latest changes
+#   5) reapply stashed changes
+function update_all_submodules()
+{
+    #recive the passed array of paths
+    declare -a paths=("${!1}")
+    local CURDIR=$(pwd)
+    for i in "${paths[@]}";do
+        cd $REPODIR/$i
+        echo -e "${yellow}Updating : ${NC}`pwd`"
+        git stash 1>/dev/null 2>&1
+        git checkout master 1>/dev/null 2>&1
+        echo -e "`git pull`\n"
+        git pull 1>/dev/null 2>&1
+        git stash apply 1>/dev/null 2>&1
+    done
+    cd $CURDIR
+    echo -e "\n\t${cyan}#### Please commit and push your changes now if any #### ${NC}"
+}
+
+# check if the entered submodule is valid
+function check_submodule_valid()
+{
+    local ENTERED_VALUE=$SUBMODULE_TO_REMOVE
+    declare -a paths=("${!1}")
+    #check if valid submodule was provided
+    local NUM_SUBMODULES_MATCHES=0
+
+    #check more than 1 match happend
+    for i in "${paths[@]}";do
+        DESIRED_SUBMODULE_LINE=$(echo "$i" | grep $SUBMODULE_TO_REMOVE )
+        if [ ${#DESIRED_SUBMODULE_LINE} -gt 0 ]; then
+            matchedPaths[$NUM_SUBMODULES_MATCHES]=$i
+            NUM_SUBMODULES_MATCHES=`expr $NUM_SUBMODULES_MATCHES + 1`
+        fi
+    done
+
+    #if more than one match happend prompt the user for which match to delete
+    if [ $NUM_SUBMODULES_MATCHES -gt 1 ];then
+        echo -e "${yellow}Found more than 1 match to${NC} $ENTERED_VALUE"
+        prompt_module_num matchedPaths[@]
+        SUBMODULE_TO_REMOVE=${paths[`expr $PROMPT_CHOSEN_NUMBER - 1`]}
+        remove_submodule
+        exit 0
+    elif [ $NUM_SUBMODULES_MATCHES == 0 ];then
+        echo -e "${red}Submodule :${NC} ${SUBMODULE_TO_REMOVE}${red} was not found.${NC}"
+        exit 0
+    fi
+    remove_submodule
+}
+
+#remove submodule
+#procedure :
+#   1) remove the submodule part from .gitmodules
+#   2) remove the submodule part from .git/config
+#   3) remove the the submodule cached directory
+#   4) remove the submodule from .git/modules directory
+#   5) remove the submodule directory
+function remove_submodule()
+{
+    local CURDIR=$(pwd)
+    echo -e "${yellow}Deleting :${NC} $SUBMODULE_TO_REMOVE"
+
+    cd $REPODIR
+    #remove from .gitmodules
+    git config -f $REPODIR/.gitmodules --remove-section submodule.$SUBMODULE_TO_REMOVE
+    
+    git add $REPODIR/.gitmodules
+
+    git config -f $REPODIR/.git/config --remove-section submodule.$SUBMODULE_TO_REMOVE
+
+    git rm --cached $REPODIR/$SUBMODULE_TO_REMOVE 1>/dev/null 2>&1
+    rm -rf $REPODIR/.git/modules/$SUBMODULE_TO_REMOVE 1>/dev/null 2>&1
+    rm -rf $REPODIR/$SUBMODULE_TO_REMOVE 1>/dev/null 2>&1
+
+    git commit -m "Removed submodule $SUBMODULE_TO_REMOVE using gitsubmodule script" 1>/dev/null 2>&1 
+
+    cd $CURDIR
+    echo -e "${green}Deleted :${NC} $SUBMODULE_TO_REMOVE ${green}successfully${NC}"
+    echo -e "\n\t${cyan}#### Please push the changes #### ${NC}"
+}
+
+#Main
+check_directory $@
+
+exit 0
