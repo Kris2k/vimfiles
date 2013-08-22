@@ -40,9 +40,6 @@
 [submodule ".vim/bundle/pathogen"]
 	path = .vim/bundle/pathogen
 	url = git@github.com:Kris2k/vim-pathogen.git
-[submodule ".vim/bundle/minibufexpl"]
-	path = .vim/bundle/minibufexpl
-	url = git@github.com:Kris2k/minibuferexpl.git
 [submodule ".vim/bundle/file-line-vim"]
 	path = .vim/bundle/file-line-vim
 	url = git@github.com:Kris2k/file-line-vim.git
