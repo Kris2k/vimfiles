@@ -18,7 +18,8 @@ if has("gui_running")
     set guioptions -=m
     set guioptions -=T
     set guioptions -=L
-    set fileencodings=ucs-bom,utf-8,latin1
+    set fileencodings=utf-8
+    " set fileencodings=ucs-bom,utf-8,latin1
     " polis settings for gui
     set encoding=utf8
     set mouse=""
@@ -382,6 +383,12 @@ set pastetoggle=<F9>
 nnoremap <silent> <C-h> :bprevious<CR>
 nnoremap <silent> <C-l> :bnext<CR>
 
+" conflicts with windows keys ....those keyborad hacks
+nnoremap <silent> <M-h> <C-w>h
+nnoremap <silent> <M-j> <C-w>j
+nnoremap <silent> <M-k> <C-w>k
+nnoremap <silent> <M-l> <C-w>l
+
 
 " replace paste or swap
 vnoremap rp "0p
@@ -574,16 +581,22 @@ function! SetMakePrg()
         setlocal makeprg='./bam'
         return
     endif
-    if bufname("%") =~ ".*\.tex"
-        setlocal makeprg=latexmk\ -pdf
-        return 0
-    endif
     if glob('?akefile') != ''
         setlocal makeprg=make\ -j4\ $*
         return 0
     endif
-    if bufname("%") =~ ".*\.c" || bufname("%") =~ ".*\.cpp"
-        setlocal makeprg=g++\ %
+    if bufname("%") =~ ".*\.tex"
+        setlocal makeprg=latexmk\ -pdf
+        return 0
+    endif
+
+    if bufname("%") =~ ".*\.c"
+        setlocal makeprg=gcc\ -Wall\ -g\ %
+        return 0
+    endif
+    if  bufname("%") =~ ".*\.cpp"
+        setlocal makeprg=g++\ -Wall\ -Weffective\ %
+        return 0
     endif
     return 1
 endfunction
