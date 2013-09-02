@@ -44,7 +44,7 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround
 set tabstop=4
-set expandtab
+set expandtab smarttab
 let g:tex_flavor='latex'
 """""""""""""""""""""""""
 " => Files backups are off
