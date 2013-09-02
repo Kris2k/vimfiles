@@ -465,7 +465,6 @@ let g:rbpt_colorpairs = [
     \ ['darkgray',    'DarkOrchid3'],
     \ ['darkgreen',   'firebrick3'],
     \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['brown',       'firebrick3'],
     \ ['gray',        'RoyalBlue3'],
@@ -476,8 +475,9 @@ let g:rbpt_colorpairs = [
     \ ['darkcyan',    'SeaGreen3'],
     \ ['darkred',     'DarkOrchid3'],
     \ ['red',         'firebrick3'],
+    \ ['darkred',     'SeaGreen3'],
     \ ]
-
+" dark red is bad
 
 augroup RainbowsParentheses
     autocmd!
