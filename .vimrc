@@ -684,6 +684,14 @@ endif
 "set tags+=~/.vim/tags/stl.tags
 
 """"""""""""""""""""""""""""""""""""""""""
+" => GO
+""""""""""""""""""""""""""""""""""""""""""
+augroup GoFormater
+  autocmd FileType go setlocal makeprg=go\ run\ %
+augroup END
+
+
+""""""""""""""""""""""""""""""""""""""""""
 " =>  GitGutter
 """"""""""""""""""""""""""""""""""""""""""
 hi SignColumn ctermbg=NONE
