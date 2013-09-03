@@ -67,3 +67,6 @@
 [submodule "minbuffexpl.vim"]
 	path = .vim/bundle/minibufexpl.vim
 	url = git@github.com/Kris2k/minibufexpl.vim
+[submodule "projectLite.vim"]
+	path = .vim/bundle/projectLite.vim
+	url = git@github.com:Kris2k/projectLite.vim.git

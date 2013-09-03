@@ -1,4 +1,6 @@
 tags
+.projectLite.vim
+.vim/sessions
 .vim/**/doc/tags
 .vim/tmp
 .vim/.netrwhist
