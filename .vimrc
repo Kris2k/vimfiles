@@ -281,8 +281,8 @@ endif
 
 "Fast search & replace
 noremap "" :s:::g<Left><Left><Left>
-" FIXME: it break the  searching
-"noremap ;' :%s:::g<Left><Left><Left>
+noremap "} :%s:::g<Left><Left><Left>
+noremap "? :%s///g<Left><Left><Left>
 
 " Mapping of jumps
 nnoremap ' `
