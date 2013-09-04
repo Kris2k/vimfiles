@@ -237,7 +237,8 @@ let g:makeTarget=''
 "nnoremap <unique> <silent> <Leader>t :call MakeGreen()<cr>
 
 " noremap <silent> <leader>x :s/\ *$//g<cr>
-nnoremap <leader><leader> :make <cr>
+" FIXME: this hack works for gnu screen problems when invoked make
+nnoremap <leader><leader> :make <cr>:redraw!<cr>
 nnoremap <leader>s :w!<cr>
 nnoremap <leader>x :qall!<cr>
 noremap  <silent> <leader>d :cd %:h<cr>
