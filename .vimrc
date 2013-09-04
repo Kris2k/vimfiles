@@ -97,11 +97,6 @@ inoremap jK <Esc>
 "nnoremap j gj
 "nnoremap k gk
 
-"For learning purposes it is ok,
-"But in terminal it will disable arrows Fn keys and other usefull stuff
-"Left as a warning
-"inoremap <Esc> <nop> "
-
 """"""""""""""""""""""""""""""""""
 " => Terminal/gui settings (gvim)
 """"""""""""""""""""""""""""""""""
@@ -118,7 +113,7 @@ else
     colorscheme kchrisk
 endif
 
-" This also brreak somethin
+" This also breaks something
 if match($TERM, "screen")!=-1
   set term=xterm-256color
 endif
@@ -227,10 +222,6 @@ let maplocalleader = "\\"
 let g:makeJobNumber='4'
 let g:makeTarget=''
 
-" builds
-"nnoremap <leader>m :make<cr>
-"nnoremap <leader>m :execute "make ".makeJobNumber." ".makeTarget<cr>
-"echo "make -j".makeJobNumber." ".makeTarget
 
 " tests that call make  and commandT becaluse it bothers makegreen
 " hasmapto('MakeGreen') is ok but this line makes problems
@@ -304,10 +295,8 @@ command! Q qall
 noremap gI `.
 
 " use arrows for something usefull
-"nnoremap <left>  :lnext<cr>zvzz
-"nnoremap <right> :lprev<cr>zvzz
-noremap <M-right> <C-W>>2
-noremap <M-left>  <C-W><2
+nnoremap <M-right> <C-W>>2
+nnoremap <M-left>  <C-W><2
 nnoremap <M-up>    <Esc>:resize -2 <CR>
 nnoremap <M-down>  <Esc>:resize +2 <CR>
 
@@ -323,16 +312,6 @@ vnoremap q <c-c>
 """"""""""""""""""""""""""""""
 " => Fn  Shortcuts and others
 """""""""""""""""""""""""""""""
-function! EqualizeWindows()
-    if  bufwinnr(bufnr("-MiniBufExplorer-")) == -1
-        wincmd =
-    else
-        :TMiniBufExplorer
-        wincmd =
-        :TMiniBufExplorer
-    endif
-endfunction
-
 function! CursorLineToggle()
     if &cursorline
         set nocursorline
@@ -375,12 +354,11 @@ inoremap <silent> <F7> <C-r><C-o>+
 vnoremap <silent> <C-F7> "+zp`]
 noremap  <silent> <F8> :TMiniBufExplorer <CR>
 set pastetoggle=<F9>
-" buffer switching
-" noremap   <F10> call EqualizeWindows()<CR>
 " map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 "       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 "       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+" buffer switching
 nnoremap <silent> <C-h> :bprevious<CR>
 nnoremap <silent> <C-l> :bnext<CR>
 
@@ -490,12 +468,6 @@ augroup RainbowsParentheses
 augroup END
 
 """"""""""""""""""""""""""""""
-" =>  OmniCpp Completion
-"""""""""""""""""""""""""""""""
-"let OmniCpp_NamespaceSearch = 2
-"let OmniCpp_DisplayMode = 1
-
-""""""""""""""""""""""""""""""
 " => xptemplate plugin
 """""""""""""""""""""""""""""""
 " This is cool but somewhat like too bulky
@@ -555,25 +527,8 @@ if has("cscope") && filereadable("/usr/bin/cscope")
     set csverb
 endif
 
-let g:makeprgOverride = 0
-function! ToggleBuildOverride()
-    if ( g:makeprgOverride == 0 )
-        let g:makeprgOverride = 1
-        echo "Enable  override"
-    else
-        let g:makeprgOverride = 0
-        echo "Disable override"
-    endif
-endfunction
-
-nnoremap <leader>o :call ToggleBuildOverride()<cr>
 
 function! SetMakePrg()
-
-    if ( g:makeprgOverride )
-        return 0
-    endif
-
     if filereadable('wscript')
         setlocal makeprg='./waf'
         return 0
@@ -629,7 +584,6 @@ if has("autocmd")
 
     augroup Build
         autocmd!
-        autocmd BufEnter *.c,*.cpp  setlocal makeprg=g++\ %
         autocmd BufEnter *  call SetMakePrg()
     augroup END
 
@@ -643,7 +597,6 @@ if has("autocmd")
 
     augroup CodeFormatters
         autocmd!
-
         " autocmd  BufReadPost,FileReadPost   *.py    :silent %!PythonTidy.py
         " autocmd  BufReadPost,FileReadPost   *.p[lm] :silent %!perltidy -q
         " autocmd  BufReadPost,FileReadPost   *.xml   :silent %!xmlpp -t -c -n
