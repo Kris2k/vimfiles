@@ -308,8 +308,8 @@ noremap gI `.
 "nnoremap <right> :lprev<cr>zvzz
 noremap <M-right> <C-W>>2
 noremap <M-left>  <C-W><2
-nnoremap <M-up>    <Esc>:resize +2 <CR>
-nnoremap <M-down>  <Esc>:resize -2 <CR>
+nnoremap <M-up>    <Esc>:resize -2 <CR>
+nnoremap <M-down>  <Esc>:resize +2 <CR>
 
 nnoremap <left>  :colder<cr>zvzz
 nnoremap <right> :cnewer<cr>zvzz
