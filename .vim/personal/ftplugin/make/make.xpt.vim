@@ -5,7 +5,7 @@ XPTinclude
       \ _common/common
       \ _comment/singleSign
 
-XPT ansiC " minimalistic anis c make
+XPT minimalC " minimalistic anis c make
 TARGET:=test
 all: $(TARGET)
 .PHONY: $(TARGET)
@@ -21,7 +21,7 @@ clean:
 $(TARGET): $(obj)
     $(CC) $(CFLAGS)  $(LDFLAGS) $\^ -o $@
 
-XPT cppMinimal " minimalistic C++ make
+XPT minmalCpp " minimalistic C++ make
 TARGET:=test
 all: $(TARGET)
 .PHONY: $(TARGET)
