@@ -464,7 +464,8 @@ augroup RainbowsParentheses
     au Syntax * RainbowParenthesesLoadRound
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
-    au Syntax * RainbowParenthesesLoadChevrons
+    " This will break for loop for ( int i=0; i<4; i++) see >
+    " au Syntax * RainbowParenthesesLoadChevrons
 augroup END
 
 """"""""""""""""""""""""""""""
@@ -597,6 +598,7 @@ if has("autocmd")
 
     augroup CodeFormatters
         autocmd!
+        " autocmd  Filetype gentoo-init-d setlocal 
         " autocmd  BufReadPost,FileReadPost   *.py    :silent %!PythonTidy.py
         " autocmd  BufReadPost,FileReadPost   *.p[lm] :silent %!perltidy -q
         " autocmd  BufReadPost,FileReadPost   *.xml   :silent %!xmlpp -t -c -n
