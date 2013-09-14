@@ -568,6 +568,7 @@ if has("autocmd")
 
     augroup plugin_commentary
         autocmd!
+        autocmd FileType *config setlocal commentstring=#\ %s
         autocmd FileType go setlocal commentstring=//\ %s
         autocmd FileType c,cpp setlocal commentstring=//\ %s
         autocmd BufEnter *.conf setlocal commentstring=#\ %s
