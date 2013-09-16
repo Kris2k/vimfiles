@@ -340,7 +340,8 @@ nmap <unique> <F1>  <Plug>ZoomWin
 let f1_mapped=1
 endif
 noremap <silent> <F2> :set ignorecase! noignorecase?<CR>
-noremap <silent> <F3> :set hlsearch! hlsearch?<CR>
+" noremap <silent> <F3> :set hlsearch! hlsearch?<CR>
+noremap <silent> <F3> :GitGutterToggle<CR>
 noremap  <silent> <F4> :call NumberInv()<CR>
 noremap  <silent> <F5> :setlocal spell! spell?<CR>
 noremap  <silent> <F6> :call CursorLineToggle()<cr>
