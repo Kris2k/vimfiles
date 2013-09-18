@@ -649,8 +649,8 @@ if has("autocmd")
         autocmd!
         autocmd BufEnter  *.cpp,*.c,*.h,*.hpp	set completeopt-=preview
         autocmd BufLeave  *.cpp,*.c,*.h,*.hpp	set completeopt+=preview
-        autocmd BufEnter  *.cpp,*.c,*.h,*.hpp	set iskeyword+=:
-        autocmd BufLeave  *.cpp,*.c,*.h,*.hpp	set iskeyword-=:
+        " autocmd BufEnter  *.cpp,*.c,*.h,*.hpp	set iskeyword+=:
+        " autocmd BufLeave  *.cpp,*.c,*.h,*.hpp	set iskeyword-=:
     augroup END
 
     augroup quickfix
