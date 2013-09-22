@@ -19,9 +19,9 @@ if has("gui_running")
     set guioptions -=T
     set guioptions -=L
     set fileencodings=utf-8
+    set encoding=utf8
     " set fileencodings=ucs-bom,utf-8,latin1
     " polis settings for gui
-    set encoding=utf8
     set mouse=""
 endif
 
@@ -689,12 +689,12 @@ nnoremap <silent> gh :GitGutterNextHunk<cr>
 """"""""""""""""""""""""""""""""""""""""""
 " =>  Cammel case motion to the recue
 """"""""""""""""""""""""""""""""""""""""""
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
+" sunmap w
+" sunmap b
+" sunmap e
 
 """"""""""""""""""""""""""""""""""""""""""
 " =>  Avoid hit enter, for man and any other cmd
