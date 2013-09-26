@@ -255,6 +255,7 @@ nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c','5','no')<CR>
 ""
 " sourcing Hacks
 nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
+nnorema <leader>w :!clang-format -i <C-R><C-W><cr>
 
 " fast  no magic searching
 nnoremap <silent> <leader>v /\v<C-R><C-W><CR>
@@ -494,6 +495,7 @@ let g:clang_periodic_quickfix = 0
 let g:clang_conceal_snippets  = 0
 let g:clang_complete_patterns = 0
 let g:clang_complete_macros   = 1
+
 "let g:clang_use_library       = 1
 "let g:clang_library_path      = '/usr/lib64/llvm'
 " clang to set for proper cross compiler header path
