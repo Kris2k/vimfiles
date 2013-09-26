@@ -51,7 +51,7 @@ let g:tex_flavor='latex'
 """""""""""""""""""""""""
 set nobackup         "do not create backup file
 set nowritebackup    "no create backup when overwriting file
-set swapfile    " enabled to prevent double editing
+set noswapfile    " enabled to prevent double editing
 
 if !isdirectory($HOME . '/.vim/tmp/swap')
     call mkdir($HOME . '/.vim/tmp/swap', 'p', 0700)
