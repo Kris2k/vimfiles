@@ -431,6 +431,8 @@ set wildignore+=*.html,*.o,*.obj,*.so,*.swp,*.zip,*.git,.svn
 """""""""""""""""""""""""
 " => ctrl-p plugin
 """""""""""""""""""""""""
+" disable for now
+let g:loaded_ctrlp = 1
 let g:ctrlp_regexp = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_prompt_mappings = { 'PrtAdd(".*")': ['<space>'] }
