@@ -426,8 +426,52 @@ let Tlist_Use_Right_Window = 1
 """""""""""""""""""""""""
 " => command-t plugin
 """""""""""""""""""""""""
-set wildignore+=*.html,*.o,*.obj,.git,.svn "for command-t ignore objects
+set wildignore+=*.html,*.o,*.obj,*.so,*.swp,*.zip,*.git,.svn
 
+"""""""""""""""""""""""""
+" => ctrl-p plugin
+"""""""""""""""""""""""""
+let g:ctrlp_regexp = 1
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+""""""""""""""""""""""""""""""
+" => Robot framework plugin detection
+"""""""""""""""""""""""""""""""
+" let g:robot_syntax_for_txt=1
+
+""""""""""""""""""""""""""""""
+" => rainbow_parenthsis plugin
+"""""""""""""""""""""""""""""""
+" FIXME: under terminal 12 max colors make some parenthes difficult tosee
+" FIXME: still blue is diffictult to display on black backroudn
+let g:rbpt_max = 8
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['DarkYellow',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ]
+" dark red is bad
+
+augroup RainbowsParentheses
+    autocmd!
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
 """"""""""""""""""""""""""""""
 " => Robot framework plugin detection
 """""""""""""""""""""""""""""""
