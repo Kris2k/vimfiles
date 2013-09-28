@@ -9,6 +9,15 @@ call pathogen#infect()
 let &runtimepath .=',~/.vim/personal'
 
 """"""""""""""""""""""""""""""
+" => nfs go code plugin bulshit
+"""""""""""""""""""""""""""""""
+let g:gonfs_dir = $HOME . '/Projects/gocode/src/github.com/nsf/gocode/vim/'
+if isdirectory(g:gonfs_dir)
+  let &runtimepath .= ',' . g:gonfs_dir
+  " gocode have to be in path etc
+endif
+
+""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""
 if has("gui_running")
