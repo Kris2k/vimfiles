@@ -103,6 +103,7 @@ inoremap Jk <Esc>
 inoremap jK <Esc>
 """ for omni compleation because I can't type if sth is entered
 inoremap <c-x><c-o> <c-x><c-o><c-p>
+" inoremap <c-x><c-f> <c-x><c-f><c-p>
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
 "nnoremap j gj
