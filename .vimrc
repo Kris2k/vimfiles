@@ -563,12 +563,16 @@ let g:clang_complete_macros   = 1
 
 
 """""""""""""""""""""""""
-" =>  syntatctic
+" =>  Syntatctic
 """""""""""""""""""""""""
+let g:syntastic_check_on_open=1
+" let g:syntastic_enable_signs=0
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 "let g:pyflakes_use_quickfix = 1
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
-
-let g:syntastic_enable_signs=0
 
 """""""""""""""""""""""""
 " => cscope database auto add see :help cscopequickfix
