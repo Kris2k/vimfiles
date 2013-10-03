@@ -129,6 +129,11 @@ endif
 if match($TERM, "screen")!=-1
   set term=xterm-256color
 endif
+""""""""""""""""""""""""""""""""""
+" => Highglight formating
+""""""""""""""""""""""""""""""""""
+" Gent00 leave my text files alone,
+let g:leave_my_textwidth_alone = 1
 " https://github.com/bitc/vim-bad-whitespace/blob/master/plugin/bad-whitespace.vim
 " Highlight trailing whitespace and lines longer than 80 columns.
 highlight LongLine ctermbg=DarkYellow guibg=DarkYellow
@@ -173,7 +178,7 @@ else
         autocmd InsertLeave * syntax match WhitespaceEOL /\s\+$/
     augroup END
 endif
-"
+
 " autocmd InsertEnter * syn clear EOLWS | syn match EOLWS excludenl /\s\+\%#\@!$/
 " autocmd InsertLeave * syn clear EOLWS | syn match EOLWS excludenl /\s\+$/
 " highlight EOLWS ctermbg=124 guibg=Red
