@@ -453,10 +453,6 @@ let g:loaded_ctrlp = 1
 let g:ctrlp_regexp = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_prompt_mappings = { 'PrtAdd(".*")': ['<space>'] }
-""""""""""""""""""""""""""""""
-" => Robot framework plugin detection
-"""""""""""""""""""""""""""""""
-" let g:robot_syntax_for_txt=1
 
 """"""""""""""""""""""""""""""
 " => rainbow_parenthsis plugin
