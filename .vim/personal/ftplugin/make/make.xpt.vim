@@ -32,10 +32,10 @@ clean:
     -rm $(TARGET) $(obj)
 
 %.o:  %.c
-    $(CXX) $(CFLAGS) -c $< -o $@
+    $(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(TARGET): $(obj)
-    $(CXX) $(CFLAGS)  $(LDFLAGS) $\^ -o $@
+    $(CXX) $(CXXFLAGS)  $(LDFLAGS) $\^ -o $@
 
 
 XPT beerware " beerware licence 
