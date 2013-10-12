@@ -567,6 +567,9 @@ let g:clang_complete_macros   = 1
 " =>  Syntatctic
 """""""""""""""""""""""""
 let g:syntastic_check_on_open=1
+let g:syntastic_auto_loc_list=2
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_cpp_compiler_options = '-std=c++0x'
 " let g:syntastic_enable_signs=0
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
