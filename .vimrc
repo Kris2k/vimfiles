@@ -600,7 +600,7 @@ endif
 
 function! SetMakePrg()
     if filereadable('wscript')
-        setlocal makeprg='./waf'
+        setlocal makeprg=./waf\ --alltests
         return 0
     endif
     if filereadable('bam.lua') && filereadable('./bam')
