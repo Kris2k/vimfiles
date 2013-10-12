@@ -21,10 +21,11 @@ clean:
 $(TARGET): $(obj)
     $(CC) $(CFLAGS)  $(LDFLAGS) $\^ -o $@
 
-XPT minmalCpp " minimalistic C++ make
+XPT minimalCpp " minimalistic C++ make
 TARGET:=test
 all: $(TARGET)
 .PHONY: $(TARGET)
+CXXFLAGS=-std=c++0x
 
 obj:=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 
