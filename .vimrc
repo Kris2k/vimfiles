@@ -274,6 +274,8 @@ nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c','5','no')<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
 nnorema <leader>w :!clang-format -i <C-R><C-W><cr>
 
+" relative path open for robot framewor
+nnoremap <silent> <Leader>o :execute  ':e ' . expand("%:h") . "/" . expand("<cWORD>")<cr>
 " fast  no magic searching
 nnoremap <silent> <leader>v /\v<C-R><C-W><CR>
 
