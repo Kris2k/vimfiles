@@ -495,6 +495,11 @@ augroup RainbowsParentheses
 " let g:robot_syntax_for_txt=1
 
 """"""""""""""""""""""""""""""
+" => Alternate file plugin
+"""""""""""""""""""""""""""""""
+let g:alternateSearchPath = 'sfr:../source,sfr:../src,sfr:../include,sfr:../inc,sfr:../include/telegraph'
+
+""""""""""""""""""""""""""""""
 " => rainbow_parenthsis plugin
 """""""""""""""""""""""""""""""
 " FIXME: under terminal 12 max colors make some parenthes difficult tosee
