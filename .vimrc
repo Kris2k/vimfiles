@@ -28,7 +28,7 @@ if has("gui_running")
     set guioptions -=T
     set guioptions -=L
     set fileencodings=utf-8
-    set encoding=utf8
+    set encoding=utf-8
     " set fileencodings=ucs-bom,utf-8,latin1
     " polis settings for gui
     set mouse=""
