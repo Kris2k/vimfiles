@@ -674,6 +674,7 @@ if has("autocmd")
 
     augroup plugin_commentary
         autocmd!
+        autocmd FileType asm setlocal commentstring=;\ %s
         autocmd FileType *conf-d setlocal commentstring=#\ %s
         autocmd FileType *config setlocal commentstring=#\ %s
         autocmd FileType go setlocal commentstring=//\ %s
