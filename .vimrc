@@ -20,7 +20,7 @@ endif
 """"""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""
-set mouse="a"
+set mouse=a
 vnoremap <LeftRelease> "+y<LeftRelease>
 
 if has("gui_running")
@@ -114,7 +114,7 @@ inoremap <c-x><c-o> <c-x><c-o><c-p>
 """"""""""""""""""""""""""""""""""
 " => Terminal/gui settings (gvim)
 """"""""""""""""""""""""""""""""""
-if !has('win32') && !has('win64')
+if !has("gui_running") && !has('win32') && !has('win64')
     set term=$TERM       " Make arrow and other keys work
 endif
 
