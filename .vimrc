@@ -20,6 +20,9 @@ endif
 """"""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""
+set mouse="a"
+vnoremap <LeftRelease> "+y<LeftRelease>
+
 if has("gui_running")
     " no buffer menu for me
     let no_buffers_menu = 1
@@ -31,7 +34,6 @@ if has("gui_running")
     set encoding=utf-8
     " set fileencodings=ucs-bom,utf-8,latin1
     " polis settings for gui
-    set mouse=""
 endif
 
 "if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
@@ -429,7 +431,7 @@ map <silent> <C-F12> :CtagCscopeRegen<CR>
 """""""""""""""""""""""""""""""
 " => Minibuffer plugin
 """""""""""""""""""""""""""""""
-let g:miniBufExplorerMoreThanOne = 2
+let g:miniBufExplorerMoreThanOne = 1
 let g:miniBufExplTabWrap         = 1
 let g:miniBufExplStatusLineText = ''
 " hack for sourcing again the vimrc and setting coulorsheme
