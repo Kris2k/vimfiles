@@ -707,7 +707,7 @@ if has("autocmd")
 
     augroup CodeFormatters
         autocmd!
-        " autocmd  Filetype gentoo-init-d setlocal 
+        " autocmd  Filetype gentoo-init-d setlocal
         " autocmd  BufReadPost,FileReadPost   *.py    :silent %!PythonTidy.py
         " autocmd  BufReadPost,FileReadPost   *.p[lm] :silent %!perltidy -q
         " autocmd  BufReadPost,FileReadPost   *.xml   :silent %!xmlpp -t -c -n
