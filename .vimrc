@@ -421,7 +421,7 @@ function! <SID>StripTrailingWhitespace()
     call cursor(l, c)
 endfunction
 
-command! Strip :call <SID>StripTrailingWhitespace()<cr>
+command! Strip call <SID>StripTrailingWhitespace()
 
 " generate Ctags cscope database for C,C++ files
 command! CtagCscopeRegen exe '! find . -regex  ".*\.\(c\|cc\|cpp\|h\|hpp\)$"  -print > cscope.files && cscope -bq && ctags --c++-kinds=+p --fields=+iaS --extra=+q --sort=foldcase -L cscope.files '
