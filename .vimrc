@@ -665,6 +665,11 @@ endfunction
 " autocmd! QuickfixCmdPost * call g:SortUniqQFList()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => xml formating
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: create range command that can execute on Visual selection
+" !xmllint --format -
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmds Makefiles autocmd, kernel makefiles etc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
