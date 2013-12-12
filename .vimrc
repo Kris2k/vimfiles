@@ -639,7 +639,7 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Quickfix sort
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:CompareQuickfixEntries(i1, i2)
+function! g:CompareQuickfixEntries(i1, i2)
   if bufname(a:i1.bufnr) == bufname(a:i2.bufnr)
     return a:i1.lnum == a:i2.lnum ? 0 : (a:i1.lnum < a:i2.lnum ? -1 : 1)
   else
@@ -647,12 +647,13 @@ function! s:CompareQuickfixEntries(i1, i2)
   endif
 endfunction
 
-function! s:SortUniqQFList()
+function! g:SortUniqQFList()
   let sortedList = sort(getqflist(), 's:CompareQuickfixEntries')
   let uniqedList = []
   let last = ''
   for item in sortedList
     let this = bufname(item.bufnr) . "\t" . item.lnum
+    " let this = bufname(item.bufnr)
     if this !=# last
       call add(uniqedList, item)
       let last = this
@@ -661,7 +662,7 @@ function! s:SortUniqQFList()
   call setqflist(uniqedList)
 endfunction
 " this needs messue up the compliation
-" autocmd! QuickfixCmdPost * call s:SortUniqQFList()
+" autocmd! QuickfixCmdPost * call g:SortUniqQFList()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Autocmds Makefiles autocmd, kernel makefiles etc
