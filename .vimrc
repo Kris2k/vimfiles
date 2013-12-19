@@ -754,6 +754,11 @@ endif
 """"""""""""""""""""""""""""""""""""""""""
 " TODO: check it
 " xmllint --format
+function! XmlFormat(l1, l2)
+"get the range in current buffer from line1 and line2 and pipe it to
+"xmllint --format -
+endfunction
+command! -range=% XmlFormat call XmlFormat(<line1>,<line2>)
 
 """"""""""""""""""""""""""""""""""""""""""
 " => ctags
