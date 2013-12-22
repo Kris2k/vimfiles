@@ -689,7 +689,7 @@ if has("autocmd")
         autocmd FileType robot setlocal commentstring=Comment\ \ \ \ %s
         autocmd FileType cfg setlocal commentstring=#\ %s
         autocmd FileType fstab setlocal commentstring=#\ %s
-        autocmd FileType gentoo-init-d setlocal commentstring=#\ %s
+        autocmd FileType gentoo-init-d,gentoo-package-use,gentoo-package-keywords setlocal commentstring=#\ %s
         autocmd FileType htmldjango setlocal commentstring={#\ %s\ #}
         autocmd FileType clojurescript setlocal commentstring=;\ %s
         autocmd FileType puppet setlocal commentstring=#\ %s
