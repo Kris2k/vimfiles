@@ -753,13 +753,23 @@ endif
 """"""""""""""""""""""""""""""""""""""""""
 " =>  xml
 """"""""""""""""""""""""""""""""""""""""""
-" TODO: check it
-" xmllint --format
-function! XmlFormat(l1, l2)
-"get the range in current buffer from line1 and line2 and pipe it to
-"xmllint --format -
-endfunction
-command! -range=% XmlFormat call XmlFormat(<line1>,<line2>)
+" This should strighten out the xml
+" TODO dude you have to check the clam plugin
+function! s:XmlFormat() range " {{{
+  let old_z = @z
+  let old_paste = &paste
+
+  normal! gv"zy
+  let result = system('xmllint --format -',@z)
+  silent! execute a:firstline . ',' a:lastline . 'd'
+  set paste
+  execute 'normal I' . result
+
+  let &paste = old_paste
+  let @z = old_z
+endfunction " }}}
+
+command! -range=%  -nargs=0 XmlFormat call s:XmlFormat()
 
 """"""""""""""""""""""""""""""""""""""""""
 " => ctags
