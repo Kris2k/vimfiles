@@ -31,6 +31,7 @@ if has("gui_running")
     set guioptions -=T
     set guioptions -=L
     set fileencodings=utf-8
+    " windows is stuipid so you can use cp1250
     set encoding=utf-8
     " set fileencodings=ucs-bom,utf-8,latin1
     " polis settings for gui
