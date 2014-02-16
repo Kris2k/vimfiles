@@ -303,6 +303,8 @@ noremap "? :%s///g<Left><Left><Left>
 nnoremap ' `
 nnoremap ` '
 
+" This is avesome alows . on visula mode
+vnoremap . :norm.<CR>
 "  <|>  stays in insert mode
 "vnoremap < <gv
 "vnoremap > >gv
