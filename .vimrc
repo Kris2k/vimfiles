@@ -282,6 +282,8 @@ nnoremap <silent> <Leader>o :execute  ':e ' . expand("%:h") . "/" . expand("<cWO
 " fast  no magic searching
 nnoremap <silent> <leader>v /\v<C-R><C-W><CR>
 
+" save read only file
+cnoremap sudow w !sudo tee % >/dev/null
 """""""""""""""""""""""""""""""
 " => diff mode  mappings
 """""""""""""""""""""""""""""""
