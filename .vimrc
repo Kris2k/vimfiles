@@ -1,4 +1,5 @@
 set nocompatible
+" set cpoptions+={
 " setlocal fo+=aw for vim mutt
 """"""""""""""""""""""""""""""
 " => Pathogen plugin
