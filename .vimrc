@@ -233,14 +233,8 @@ endfunction
 """"""""""""""""""""""""""""""
 " => mapleader
 """""""""""""""""""""""""""""""
-"let mapleader=' '
-"let mapleader='-'
-let mapleader=','
+let mapleader="\<Space>"
 let maplocalleader = "\\"
-
-"let g:makeJobNumber='-j4'
-let g:makeJobNumber='4'
-let g:makeTarget=''
 
 
 " tests that call make  and commandT becaluse it bothers makegreen
@@ -249,8 +243,11 @@ let g:makeTarget=''
 
 " noremap <silent> <leader>x :s/\ *$//g<cr>
 " FIXME: this hack works for gnu screen problems when invoked make
-nnoremap <leader><leader> :make <cr>:redraw!<cr>
-nnoremap <leader>s :w!<cr>
+" nnoremap <leader><leader> :make <cr>:redraw!<cr>
+nnoremap <leader><leader> :Dispatch<cr>
+nnoremap <leader>w :w!<cr>
+nnoremap <leader>s :w<cr>
+nnoremap <leader>sc :cscope reset<cr>
 nnoremap <leader>x :qall!<cr>
 noremap  <silent> <leader>d :cd %:h<cr>
 nnoremap <silent> <leader>a :Ack <C-R><C-W><CR>
@@ -275,12 +272,10 @@ nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c','5','no')<CR>
 ""
 " sourcing Hacks
 nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>w :!clang-format -i <C-R><C-W><cr>
+"nnoremap <leader>w :!clang-format -i <C-R><C-W><cr>
 
 " relative path open for robot framewor
 nnoremap <silent> <Leader>o :execute  ':e ' . expand("%:h") . "/" . expand("<cWORD>")<cr>
-" fast  no magic searching
-nnoremap <silent> <leader>v /\v<C-R><C-W><CR>
 
 " save read only file
 cnoremap sudow w !sudo tee % >/dev/null
@@ -311,16 +306,17 @@ nnoremap [[ ?{<CR>w99[{
 nnoremap ][ /}<CR>b99]}
 nnoremap ]] j0[[%/{<CR>
 nnoremap [] k$][%?}<CR>
-"  <|>  stays in insert mode
-"vnoremap < <gv
-"vnoremap > >gv
+
+" this allows pasting just after the yanked text
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
 
 " Common typos and Minibuffer Explorer hack
 command! W :w
 command! Wq wqall
 command! WQ wqall
 command! Q qall
-
 
 " jumps remeber remeber '' is great
 noremap gI `.
@@ -331,10 +327,10 @@ nnoremap <M-left>  <C-W><2
 nnoremap <M-up>    <Esc>:resize -2 <CR>
 nnoremap <M-down>  <Esc>:resize +2 <CR>
 
-nnoremap <left>  :colder<cr>zvzz
-nnoremap <right> :cnewer<cr>zvzz
-nnoremap <up>    :cprev<cr>zvzz
-nnoremap <down>  :cnext<cr>zvzz
+nnoremap <c-left>  :colder<cr>zvzz
+nnoremap <c-right> :cnewer<cr>zvzz
+nnoremap <c-up>    :cprev<cr>zvzz
+nnoremap <c-down>  :cnext<cr>zvzz
 
 " Select (charwise) the contents of the current line, excluding indentation.
 " Great for pasting Python lines into REPLs.
@@ -386,9 +382,6 @@ inoremap <silent> <F7> <C-r><C-o>+
 vnoremap <silent> <C-F7> "+zp`]
 noremap  <silent> <F8> :TMiniBufExplorer <CR>
 set pastetoggle=<F9>
-" map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-"       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-"       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " buffer switching
 nnoremap <silent> <C-h> :bprevious<CR>
@@ -443,10 +436,6 @@ map <silent> <C-F12> :CtagCscopeRegen<CR>
 let g:miniBufExplorerMoreThanOne = 1
 let g:miniBufExplTabWrap         = 1
 let g:miniBufExplStatusLineText = ''
-" hack for sourcing again the vimrc and setting coulorsheme
-" if exists("g:did_minibufexplorer_syntax_inits")
-"     unlet g:did_minibufexplorer_syntax_inits
-" endif
 
 """""""""""""""""""""""""
 " => Tlist plugin
@@ -467,39 +456,6 @@ let g:ctrlp_regexp = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_prompt_mappings = { 'PrtAdd(".*")': ['<space>'] }
 
-""""""""""""""""""""""""""""""
-" => rainbow_parenthsis plugin
-"""""""""""""""""""""""""""""""
-" FIXME: under terminal 12 max colors make some parenthes difficult tosee
-" FIXME: still blue is diffictult to display on black backroudn
-let g:rbpt_max = 8
-
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['DarkYellow',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ]
-" dark red is bad
-
-augroup RainbowsParentheses
-    autocmd!
-    au VimEnter * RainbowParenthesesToggle
-    au Syntax * RainbowParenthesesLoadRound
-    au Syntax * RainbowParenthesesLoadSquare
-    au Syntax * RainbowParenthesesLoadBraces
 """"""""""""""""""""""""""""""
 " => Robot framework plugin detection
 """""""""""""""""""""""""""""""
