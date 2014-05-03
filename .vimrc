@@ -21,10 +21,9 @@ endif
 """"""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""
-set mouse=a
-vnoremap <LeftRelease> "+y<LeftRelease>
-
 if has("gui_running")
+    set mouse=a
+    vnoremap <LeftRelease> "+y<LeftRelease>
     " no buffer menu for me
     let no_buffers_menu = 1
     " disable  menu, Toolbar, Left scorllbar
