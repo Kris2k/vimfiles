@@ -45,7 +45,6 @@ set title
 syntax enable
 filetype plugin indent on
 
-"Enable or not enable ?
 set modeline
 set incsearch
 set hlsearch
@@ -236,12 +235,6 @@ endfunction
 let mapleader="\<Space>"
 let maplocalleader = "\\"
 
-
-" tests that call make  and commandT becaluse it bothers makegreen
-" hasmapto('MakeGreen') is ok but this line makes problems
-"nnoremap <unique> <silent> <Leader>t :call MakeGreen()<cr>
-
-" noremap <silent> <leader>x :s/\ *$//g<cr>
 " FIXME: this hack works for gnu screen problems when invoked make
 " nnoremap <leader><leader> :make <cr>:redraw!<cr>
 nnoremap <leader><leader> :Dispatch<cr>
