@@ -532,6 +532,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
 
+"""""""""""""""""""""""""
+" => clang plugin
+"""""""""""""""""""""""""
 "let g:clang_use_library       = 1
 "let g:clang_library_path      = '/usr/lib64/llvm'
 " clang to set for proper cross compiler header path
