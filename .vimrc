@@ -242,7 +242,7 @@ nnoremap <leader>w :w!<cr>
 nnoremap <leader>s :w<cr>
 nnoremap <leader>sc :cscope reset<cr>
 nnoremap <leader>x :qall!<cr>
-noremap  <silent> <leader>d :cd %:h<cr>
+noremap  <silent> <leader>d :w<cr>
 nnoremap <silent> <leader>a :Ack <C-R><C-W><CR>
 nmap <silent> <leader>c <Plug>CommentaryLine
 xmap <silent> <leader>c <Plug>Commentary
@@ -258,12 +258,12 @@ nnoremap <silent> <leader>eg :call NiceOpen("$HOME/.gitconfig")<cr>
 nnoremap <silent> <leader>eh :call NiceOpen("$HOME/.ssh/config")<cr>
 nnoremap <silent> <leader>en :call NiceOpen("/home/chris/Projects/utils/git-dotfiles/notes-programing.txt")<cr>
 
-nnoremap <Leader>f :CommandT<CR>
+" nnoremap <Leader>f :CommandT<CR>
+nnoremap <leader>f :echo "use c-p"<cr>
 " Quick fix list window
 nmap <silent> <leader>l :call ToggleList("Location List", 'l','5','no')<CR>
 nmap <silent> <leader>q :call ToggleList("Quickfix List", 'c','5','no')<CR>
-""
-" sourcing Hacks
+
 nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
 "nnoremap <leader>w :!clang-format -i <C-R><C-W><cr>
 
@@ -356,18 +356,18 @@ endfunction
 
 " hack 4 F1 map b/c vim cant handle multiple nmap F1 w/h complain
 if !exists('f1_mapped')
-nmap <unique> <F1>  <Plug>ZoomWin
-let f1_mapped=1
+    let f1_mapped=1
+    nmap <unique> <F1>  <Plug>ZoomWin
 endif
 noremap <silent> <F2> :set ignorecase! noignorecase?<CR>
 " noremap <silent> <F3> :set hlsearch! hlsearch?<CR>
 noremap <silent> <F3> :GitGutterToggle<CR>
-noremap  <silent> <F4> :call NumberInv()<CR>
-noremap  <silent> <F5> :setlocal spell! spell?<CR>
-noremap  <silent> <F6> :call CursorLineToggle()<cr>
+noremap <silent> <F4> :call NumberInv()<CR>
+noremap <silent> <F5> :setlocal spell! spell?<CR>
+noremap <silent> <F6> :call CursorLineToggle()<cr>
 " copy by F7
-" vnoremap <silent> <F7> "+ygv"zy`>
 vnoremap <silent> <F7> "+ygv"zy`>
+cnoremap <C-V> <C-R>+
 ""paste (Shift-F7 to paste after normal cursor, Ctrl-F7 to paste over visual selection)
 nnoremap <silent> <F7> "+gP
 nnoremap <silent> <S-F7> "+gp
@@ -443,12 +443,10 @@ set wildignore+=*.html,*.o,*.obj,*.so,*.swp,*.zip,*.git,.svn
 """""""""""""""""""""""""
 " => ctrl-p plugin
 """""""""""""""""""""""""
-" disable for now
-let g:loaded_ctrlp = 1
-let g:ctrlp_regexp = 1
+" let g:ctrlp_regexp = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_prompt_mappings = { 'PrtAdd(".*")': ['<space>'] }
-
+noremap <c-b> :CtrlPBuffer<cr>
 """"""""""""""""""""""""""""""
 " => Robot framework plugin detection
 """""""""""""""""""""""""""""""
