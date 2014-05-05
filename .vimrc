@@ -445,8 +445,17 @@ set wildignore+=*.html,*.o,*.obj,*.so,*.swp,*.zip,*.git,.svn
 """""""""""""""""""""""""
 " let g:ctrlp_regexp = 1
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_prompt_mappings = { 'PrtAdd(".*")': ['<space>'] }
-noremap <c-b> :CtrlPBuffer<cr>
+" note c-m is same as Enter, also tab could work
+noremap <Enter> :CtrlPBuffer<cr>
+" this searches from current working directory
+let g:ctrlp_working_path_mode = 'rw'
+" this makes it from current buffer file path
+" let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_prompt_mappings = {
+    \ 'PrtInsert("r\"")': ['<c-u>'],
+    \ 'PrtInsert("r")': ['<c-[>'],
+    \ }
+
 """"""""""""""""""""""""""""""
 " => Robot framework plugin detection
 """""""""""""""""""""""""""""""
